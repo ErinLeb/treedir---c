@@ -10,7 +10,7 @@
  */
 noeud *creer_racine(){
     noeud * racine = malloc(sizeof(noeud));
-    set_nom(racine, "/");
+    set_nom(racine, "");
     racine->est_dossier = true;
     racine->pere = racine;
     racine->racine = racine;
