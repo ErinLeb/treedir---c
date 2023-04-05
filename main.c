@@ -1,8 +1,10 @@
 #include<stdlib.h>
 #include<stdbool.h>
+#include<stdio.h>
 #include "struct.h"
 #include "ls.h"
+#include "print.h"
 
 int main(){
-    noeud * tmp = creer_racine();
+    noeud * racine = creer_racine();
 }
