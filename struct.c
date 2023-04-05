@@ -105,7 +105,7 @@ int size_liste_noeud(liste_noeud *l){
  * @param l liste de noeud
  * @return renvoie la tête de la liste
  */
-noeud *popHead(liste_noeud *l){
+noeud *peek(liste_noeud *l){
     if(l!=NULL){
         return l->no;
     }
@@ -158,7 +158,7 @@ noeud *get(liste_noeud *l, int i){
  * @param l liste à remplir
  * @param n noeud à insérer
  */
-liste_noeud *pushQueue(liste_noeud *l, noeud *n){
+liste_noeud *pushTail(liste_noeud *l, noeud *n){
     if(l!=NULL){
         liste_noeud *queue = init_liste_noeud(n);
         liste_noeud *tmp = l;
