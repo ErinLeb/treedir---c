@@ -129,7 +129,7 @@ liste_noeud *supprHead(liste_noeud *l){
     l=l->succ;
     liste_noeud *res = init_liste_noeud(l->no);
     while(l->succ!=NULL){
-        res = pushQueue(res,l->succ->no);
+        res = pushTail(res,l->succ->no);
         l=l->succ;
     }
     destroy_liste_noeud(tmp);

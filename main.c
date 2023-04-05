@@ -14,21 +14,21 @@ int main(){
     noeud *edt = creer_noeud(false,"edt",racine,racine);
 
     liste_noeud *filsRacine = init_liste_noeud(cours);
-    filsRacine = pushQueue(filsRacine,td);
-    filsRacine = pushQueue(filsRacine,edt);
+    filsRacine = pushTail(filsRacine,td);
+    filsRacine = pushTail(filsRacine,edt);
     racine->fils = filsRacine;
 
     noeud *projetC = creer_noeud(true,"ProjetC",racine,cours);
     noeud *anglais = creer_noeud(true,"anglais",racine,cours);
 
-    cours->fils = pushQueue(cours->fils,projetC);
-    cours->fils = pushQueue(cours->fils,anglais);
+    cours->fils = pushTail(cours->fils,projetC);
+    cours->fils = pushTail(cours->fils,anglais);
 
     noeud *td1 = creer_noeud(false,"td1",racine,td);
     noeud *td2 = creer_noeud(false,"td2",racine,td);
 
-    td->fils = pushQueue(td->fils,td1);
-    td->fils = pushQueue(td->fils,td2);
+    td->fils = pushTail(td->fils,td1);
+    td->fils = pushTail(td->fils,td2);
 
     print(racine);
 
