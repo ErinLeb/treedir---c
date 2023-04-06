@@ -3,10 +3,10 @@
 #include<stdio.h>
 #include "struct.h"
 #include "ls.h"
-#include "print.h"
+#include "pwd.h"
 
 int main(){
-    // début des tests de print
+    // début des tests de pwd
     noeud * racine = creer_racine();
     
     noeud *cours = creer_noeud(true,"Cours",racine,racine);
@@ -30,7 +30,10 @@ int main(){
     td->fils = pushTail(td->fils,td1);
     td->fils = pushTail(td->fils,td2);
 
-    print(racine);
+    pwd(racine);
+    pwd(cours);
+    pwd(anglais);
+    pwd(td1);
 
     destroy_noeud(racine);
     destroy_noeud(cours);
@@ -41,6 +44,6 @@ int main(){
     destroy_noeud(td1);
     destroy_noeud(td2);
 
-    // fin des tests de print
+    // fin des tests de pwd
     
 }
