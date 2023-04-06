@@ -10,7 +10,7 @@
  */
 noeud *creer_racine(){
     noeud * racine = malloc(sizeof(noeud));
-    set_nom(racine, "/");
+    set_nom(racine, "");
     racine->est_dossier = true;
     racine->pere = racine;
     racine->racine = racine;
@@ -87,29 +87,17 @@ void destroy_liste_noeud(liste_noeud *l){
 }
 
 /**
- * renvoie la taille de la liste de noeuds l
- * @param l liste de noeuds dont on veut connaitre la taille
- * @return renvoie la taille de la liste de noeuds l 
+ * renvoie le nombre de noeuds de la liste l
+ * @param l liste de noeuds dont on veut connaitre le nombre de noeuds
+ * @return renvoie le nombre de noeuds de la liste l 
  */
-int size_liste_noeud(liste_noeud *l){
+int nombre_liste_noeud(liste_noeud *l){
     if(l!=NULL){ // on vérifie que l a été initialisée
         if(l->no!=NULL){ // on vérifie que l n'est pas vide ou qu'on est pas au dernier élément
-            return 1+size_liste_noeud(l->succ);
+            return 1+nombre_liste_noeud(l->succ);
         }
     }
     return 0; 
-}
-
-/**
- * renvoie la tête de la liste de noeud
- * @param l liste de noeud
- * @return renvoie la tête de la liste
- */
-noeud *peek(liste_noeud *l){
-    if(l!=NULL){
-        return l->no;
-    }
-    return NULL;
 }
 
 /**
@@ -127,16 +115,9 @@ liste_noeud *supprHead(liste_noeud *l){
     }
     liste_noeud *tmp=l;
     l=l->succ;
-    liste_noeud *res = init_liste_noeud(l->no);
-    while(l->succ!=NULL){
-        res = pushTail(res,l->succ->no);
-        l=l->succ;
-    }
-    destroy_liste_noeud(tmp);
-    return res;
+    free(tmp);
+    return l;
 }
-
-
 
 /**
  * renvoie le noeud à l'indice i de la liste de noeuds
@@ -145,7 +126,7 @@ liste_noeud *supprHead(liste_noeud *l){
  * @return renvoie le noeud à l'indice i de la liste 
  */
 noeud *get(liste_noeud *l, int i){
-    assert(i<size_liste_noeud(l)&&i>=0);
+    assert(i<nombre_liste_noeud(l)&&i>=0);
     liste_noeud *courant = l;
     for(int j=0;j<i;++j){
         courant = courant->succ;
@@ -174,12 +155,39 @@ liste_noeud *pushTail(liste_noeud *l, noeud *n){
 }
 
 /**
- * fonction de test pour afficher une liste de noeuds 
+ * renvoie une chaine de charactère contenant le nom du noeud donné en paramètre
+ * @param n noeud dont on veut le nom
+ * @return renvoie une chaine de caractère contenant le nom du noeud n
  */
-void printList(liste_noeud *l){
-    while(l){
-        printf("%s, ",l->no->nom);
-        l=l->succ;
+char *getNom(noeud *n){
+
+    int i = 0;
+    char *nom;
+
+    while(n->nom[i] != '\0'){
+        ++i;
     }
-    puts("\n");
+
+    if(i>0){
+
+        nom = malloc(sizeof(char) * i);
+        assert(nom != NULL);
+
+        for(int j = 0; j < i; ++j){
+            nom[j] = n->nom[j];
+        }
+
+        nom[i] = '\0';
+    }
+
+    else{
+
+        nom = malloc(sizeof(char) * 2);
+        assert(nom != NULL);
+        nom[0] = '/';
+        nom[1] = '\0';
+
+    }
+
+    return nom;
 }
