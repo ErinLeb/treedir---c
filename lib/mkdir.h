@@ -4,6 +4,5 @@
 #include "struct.h"
 
 void mkdir(noeud *, char *);
-bool is_correct(char *);
 
 #endif

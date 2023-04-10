@@ -3,6 +3,7 @@
 #include<assert.h>
 #include<string.h>
 #include<stdio.h>
+#include<ctype.h>
 #include "../lib/struct.h"
 
 /**
@@ -203,4 +204,23 @@ bool has_son(noeud *n,  char *nom){
         enfants = enfants->succ;
     }
     return false;
+}
+
+/*Vérifie que la chaine de caractère ne comporte que des caractères alhpa-numériques*/
+bool is_correct( char *nom){
+    assert(strlen(nom) > 0);
+    assert(strlen(nom) < 100 );
+
+    while(*nom != '\0'){
+        if(!isalnum(*nom)){
+            puts("not alhpa-numeric");
+            return false;
+        }
+        if (isspace(*nom)){
+            puts("is space");
+            return false;
+        }
+        nom++;
+    }
+    return true;
 }
