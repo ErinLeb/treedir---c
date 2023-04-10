@@ -5,6 +5,7 @@
 #include "../lib/ls.h"
 #include "../lib/print.h"
 #include "../lib/mkdir.h"
+#include "../lib/touch.h"
 #include "../lib/pwd.h"
 
 int main(){

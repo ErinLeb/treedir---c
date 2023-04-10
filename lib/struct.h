@@ -21,8 +21,9 @@ typedef struct liste_noeud liste_noeud;
 
 extern void set_nom(noeud *, const char *);
 extern char *getNom(noeud *);
-extern bool has_son(noeud *, char *);
 extern noeud *get(liste_noeud *, int);
+extern bool has_son(noeud *, char *);
+extern bool is_correct(char *);
 extern int nombre_liste_noeud(liste_noeud *);
 extern noeud *creer_racine();
 extern noeud *creer_noeud(bool, const char *, noeud *, noeud *);
