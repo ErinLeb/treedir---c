@@ -3,8 +3,8 @@
 #include<stdio.h>
 #include <stdbool.h>
 #include<string.h>
-#include "struct.h"
-#include "ls.h"
+#include "../lib/struct.h"
+#include "../lib/ls.h"
 
 /* Affiche sur le terminal la liste des noms des fils du noeud courant*/
 void ls(noeud *n){

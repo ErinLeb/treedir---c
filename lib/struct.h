@@ -19,16 +19,17 @@ struct liste_noeud{
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
-extern noeud *creer_racine();
 extern void set_nom(noeud *, const char *);
-extern noeud *creer_noeud(bool, const char *, noeud *, noeud *);
-extern void destroy_noeud(noeud *);
-extern liste_noeud *init_liste_noeud(noeud *);
-extern void destroy_liste_noeud();
-extern int nombre_liste_noeud(liste_noeud *);
-extern liste_noeud *pushTail(liste_noeud *, noeud *);
-extern noeud *get(liste_noeud *, int);
-extern liste_noeud *supprHead(liste_noeud *);
 extern char *getNom(noeud *);
+extern bool has_son(noeud *, char *);
+extern noeud *get(liste_noeud *, int);
+extern int nombre_liste_noeud(liste_noeud *);
+extern noeud *creer_racine();
+extern noeud *creer_noeud(bool, const char *, noeud *, noeud *);
+extern liste_noeud *init_liste_noeud(noeud *);
+extern void destroy_noeud(noeud *);
+extern void destroy_liste_noeud();
+extern liste_noeud *supprHead(liste_noeud *);
+extern liste_noeud *pushTail(liste_noeud *, noeud *);
 
 #endif

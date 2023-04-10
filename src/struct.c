@@ -3,7 +3,7 @@
 #include<assert.h>
 #include<string.h>
 #include<stdio.h>
-#include "struct.h"
+#include "../lib/struct.h"
 
 /**
  * initialise le noeud racine 
@@ -40,11 +40,11 @@ void set_nom(noeud *n, const char *str){
  * @param pere père du noeud
  * @return renvoie un noeud sans enfant 
  */
-noeud *creer_noeud(bool dossier, const char * nom, noeud * racine, noeud * pere){
+noeud *creer_noeud(bool dossier, const char *nom, noeud *racine, noeud *pere){
     noeud *n = malloc(sizeof(noeud));
-    assert(n!=NULL);
+    assert(n != NULL);
     n->est_dossier = dossier;
-    set_nom(n,nom);
+    set_nom(n, nom);
     n->pere = pere;
     n->racine = racine;
     n->fils = NULL;
@@ -68,7 +68,7 @@ void destroy_noeud(noeud *n){
  */
 liste_noeud *init_liste_noeud(noeud *n){
     liste_noeud *l = malloc(sizeof(liste_noeud));
-    assert(l!=NULL);
+    assert(l != NULL);
     l->no = n;
     l->succ = NULL;
     return l;
@@ -79,7 +79,7 @@ liste_noeud *init_liste_noeud(noeud *n){
  */
 void destroy_liste_noeud(liste_noeud *l){
     liste_noeud *tmp;
-    while(l!=NULL){
+    while(l != NULL){
         tmp = l;
         l = l->succ;
         free(tmp);
@@ -92,9 +92,9 @@ void destroy_liste_noeud(liste_noeud *l){
  * @return renvoie le nombre de noeuds de la liste l 
  */
 int nombre_liste_noeud(liste_noeud *l){
-    if(l!=NULL){ // on vérifie que l a été initialisée
-        if(l->no!=NULL){ // on vérifie que l n'est pas vide ou qu'on est pas au dernier élément
-            return 1+nombre_liste_noeud(l->succ);
+    if(l != NULL){ 
+        if(l->no != NULL){ 
+            return 1 + nombre_liste_noeud(l->succ);
         }
     }
     return 0; 
@@ -106,15 +106,15 @@ int nombre_liste_noeud(liste_noeud *l){
  * @return renvoie la nouvelle liste dont on a supprimé la tête 
  */
 liste_noeud *supprHead(liste_noeud *l){
-    if(l==NULL){
+    if(l == NULL){
         return NULL;
     }
-    if(l->succ==NULL){
+    if(l->succ == NULL){
         destroy_liste_noeud(l);
         return NULL;
     }
-    liste_noeud *tmp=l;
-    l=l->succ;
+    liste_noeud *tmp = l;
+    l = l->succ;
     free(tmp);
     return l;
 }
@@ -126,9 +126,9 @@ liste_noeud *supprHead(liste_noeud *l){
  * @return renvoie le noeud à l'indice i de la liste 
  */
 noeud *get(liste_noeud *l, int i){
-    assert(i<nombre_liste_noeud(l)&&i>=0);
+    assert(i < nombre_liste_noeud(l) && i >= 0);
     liste_noeud *courant = l;
-    for(int j=0;j<i;++j){
+    for(int j = 0; j < i; ++j){
         courant = courant->succ;
     }
     return courant->no;
@@ -140,10 +140,10 @@ noeud *get(liste_noeud *l, int i){
  * @param n noeud à insérer
  */
 liste_noeud *pushTail(liste_noeud *l, noeud *n){
-    if(l!=NULL){
+    if(l != NULL){
         liste_noeud *queue = init_liste_noeud(n);
         liste_noeud *tmp = l;
-        while(tmp->succ!=NULL){
+        while(tmp->succ != NULL){
             tmp = tmp->succ;
         }
         tmp->succ = queue;
@@ -160,34 +160,47 @@ liste_noeud *pushTail(liste_noeud *l, noeud *n){
  * @return renvoie une chaine de caractère contenant le nom du noeud n
  */
 char *getNom(noeud *n){
-
     int i = 0;
     char *nom;
-
     while(n->nom[i] != '\0'){
         ++i;
     }
 
     if(i>0){
-
-        nom = malloc(sizeof(char) * i);
+        nom = malloc(sizeof(char)*i);
         assert(nom != NULL);
 
         for(int j = 0; j < i; ++j){
             nom[j] = n->nom[j];
         }
-
         nom[i] = '\0';
-    }
-
-    else{
-
-        nom = malloc(sizeof(char) * 2);
+    
+    }else{
+        nom = malloc(sizeof(char)*2);
         assert(nom != NULL);
         nom[0] = '/';
         nom[1] = '\0';
-
     }
-
     return nom;
+}
+
+/*Vérifie si le noeud a un fils avec ce nom*/
+bool has_son(noeud *n,  char *nom){
+    liste_noeud *enfants = n->fils;
+    while(enfants != NULL){
+        char *tmp = nom;
+        int i = 0;
+        while(*tmp != '\0'){
+            if(enfants->no->nom[i] == '\0' || *tmp != enfants->no->nom[i]){
+                break;
+            }
+            i++;
+            tmp = tmp + 1;
+        }
+        if(i == strlen(nom)){
+            return true;
+        }
+        enfants = enfants->succ;
+    }
+    return false;
 }

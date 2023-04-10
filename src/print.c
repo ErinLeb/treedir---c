@@ -2,18 +2,16 @@
 #include<stdio.h>
 #include<string.h>
 #include<assert.h>
-#include "struct.h"
-#include "print.h"
+#include "../lib/struct.h"
+#include "../lib/print.h"
 
 /**
  * effectue un parcours en largeur de l'arbre et affiche son contenu
  * @param racine noeud racine de l'arbre
  */
 void print(noeud *racine){
-    // initialisation de la file de noeuds
     liste_noeud *fifo = init_liste_noeud(racine);
 
-    //parcours en largeur et affichage du contenu de l'arbre
     while(fifo != NULL){
         noeud *courant = fifo->no;
         char *nomCourant = getNom(courant);
@@ -34,27 +32,23 @@ void print(noeud *racine){
                         printf(",");
                     }
                 }
-            }
 
-            else{ 
+            }else{ 
                 printf("Noeud %s (D), père : %s, 0 fils",nomCourant,nomPere);
             }
-        }
-        
-        else{ 
+
+        }else{ 
             printf("Noeud %s (F), père : %s, 0 fils",nomCourant,nomPere);
         }
-
         printf("\n");
         
-        for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){ // on remplit la file avec les fils du noeud courant
+        for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){ 
             pushTail(fifo, get(courant->fils, i));
         }
 
-        fifo = supprHead(fifo); // on supprime la tête de la file
+        fifo = supprHead(fifo); 
         free(nomCourant);
         free(nomPere);
     }
-
     destroy_liste_noeud(fifo); 
 }
