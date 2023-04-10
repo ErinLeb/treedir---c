@@ -3,8 +3,8 @@
 #include<stdio.h>
 #include <stdbool.h>
 #include<string.h>
-#include "struct.h"
-#include "ls.h"
+#include "../lib/struct.h"
+#include "../lib/ls.h"
 
 void pwd(noeud *n){
 
