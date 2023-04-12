@@ -2,7 +2,7 @@
 #include<assert.h>
 #include<string.h>
 #include <stdio.h>
-#include "struct.h"
+#include "../lib/struct.h"
 #include "../lib/mkdir.h"
 
 /*Crée un fils dossier portant le nom en paramètre*/
