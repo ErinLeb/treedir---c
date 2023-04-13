@@ -7,7 +7,9 @@
 #include "../lib/mkdir.h"
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
+#include "../lib/chemin.h"
 
 int main(){
     noeud * racine = creer_racine();
 }
+
