@@ -212,4 +212,16 @@ void test_supprHead(){
     destroy_noeud(n1);
     destroy_noeud(n2);
     destroy_noeud(n3);
+    destroy_liste_noeud(l);
+}
+
+void test_getNom(){
+    noeud *racine = creer_racine();
+    noeud *n = creer_noeud(false,"fichier",racine,racine);
+
+    assert(strcmp(getNom(racine),"/") == 0);
+    assert(strcmp(getNom(n),"fichier") == 0);
+
+    destroy_noeud(racine);
+    destroy_noeud(n);
 }

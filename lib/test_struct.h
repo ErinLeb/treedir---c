@@ -15,5 +15,6 @@ extern void test_destroy_noeud();
 extern void test_destroy_liste_noeud();
 extern void test_supprHead();
 extern void test_pushTail();
+extern void test_getNom();
 
 #endif

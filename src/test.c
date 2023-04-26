@@ -74,6 +74,9 @@ void test_struct(){
     puts("supprHead");
     test_supprHead();
 
+    puts("getNom");
+    test_getNom();
+
     printf("\n-------Test de struct : fin-------\n");
 }
 

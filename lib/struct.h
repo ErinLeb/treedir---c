@@ -32,5 +32,6 @@ extern void destroy_noeud(noeud *);
 extern void destroy_liste_noeud();
 extern liste_noeud *supprHead(liste_noeud *);
 extern liste_noeud *pushTail(liste_noeud *, noeud *);
+extern char *getNom(noeud *);
 
 #endif

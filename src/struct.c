@@ -226,3 +226,15 @@ liste_noeud *pushTail(liste_noeud *l, noeud *n){
         return init_liste_noeud(n);
     }
 }
+
+/**
+ * renvoie une chaine de charactère contenant le nom du noeud donné en paramètre
+ * @param n noeud dont on veut le nom
+ * @return renvoie une chaine de caractère contenant le nom du noeud n
+ */
+char *getNom(noeud *n){
+    if(n == n->racine){
+        return "/";
+    }
+    return n->nom;
+}
