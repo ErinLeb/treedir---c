@@ -14,29 +14,28 @@ void print(noeud *racine){
 
     while(fifo != NULL){
         noeud *courant = fifo->no;
+        char *nomCourant = getNom(courant);
+        char *nomPere = getNom(courant->pere);
 
         if(courant->est_dossier){ 
-            if(nombre_liste_noeud(courant->fils) > 0){ 
-                printf("Noeud %s (D), père : %s, %i fils :", courant->nom, courant->pere->nom, nombre_liste_noeud(courant->fils));
-                
-                for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){
-                    if(get(courant->fils, i)->est_dossier){ 
-                        printf(" %s (D)", get(courant->fils, i)->nom);
-                    }else{
-                        printf(" %s (F)", get(courant->fils, i)->nom);
-                    }
-
-                    if(i != nombre_liste_noeud(courant->fils) - 1){
-                        printf(",");
-                    }
+            printf("Noeud %s (D), père : %s, %i fils", nomCourant, nomPere, nombre_liste_noeud(courant->fils));
+            if(nombre_liste_noeud(courant->fils) > 0){
+                printf(" :");
+            }   
+            for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){
+                if(get(courant->fils,i)->est_dossier){
+                    printf(" %s (D)", getNom(get(courant->fils, i)));
                 }
-
-            }else{ 
-                printf("Noeud %s (D), père : %s, 0 fils",courant->nom,courant->pere->nom);
+                else{
+                    printf(" %s (F)", getNom(get(courant->fils, i)));
+                }
+                if(i != nombre_liste_noeud(courant->fils) - 1){
+                    printf(",");
+                }
             }
-
-        }else{ 
-            printf("Noeud %s (F), père : %s, 0 fils", courant->nom,courant->pere->nom);
+        }
+        else{ 
+            printf("Noeud %s (F), père : %s, 0 fils",nomCourant,nomPere);
         }
         printf("\n");
         
