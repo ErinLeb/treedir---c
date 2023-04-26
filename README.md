@@ -1,5 +1,5 @@
 # TreeDir - C
-DECKER Benjamin
+DECKER Benjamin  
 LE BOULC'H Erin
 
 Pour lancer le projet, il suffit de rentrer la commande `make main` dans le répertoire du projet.  
