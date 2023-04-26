@@ -6,7 +6,7 @@
 #include "../lib/print.h"
 
 /**
- * effectue un parcours en largeur de l'arbre et affiche son contenu
+ * Effectue un parcours en largeur de l'arbre et affiche son contenu
  * @param racine noeud racine de l'arbre
  */
 void print(noeud *racine){
@@ -14,12 +14,10 @@ void print(noeud *racine){
 
     while(fifo != NULL){
         noeud *courant = fifo->no;
-        char *nomCourant = getNom(courant);
-        char *nomPere = getNom(courant->pere);
 
         if(courant->est_dossier){ 
             if(nombre_liste_noeud(courant->fils) > 0){ 
-                printf("Noeud %s (D), père : %s, %i fils :", nomCourant, nomPere, nombre_liste_noeud(courant->fils));
+                printf("Noeud %s (D), père : %s, %i fils :", courant->nom, courant->pere->nom, nombre_liste_noeud(courant->fils));
                 
                 for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){
                     if(get(courant->fils, i)->est_dossier){ 
@@ -34,11 +32,11 @@ void print(noeud *racine){
                 }
 
             }else{ 
-                printf("Noeud %s (D), père : %s, 0 fils",nomCourant,nomPere);
+                printf("Noeud %s (D), père : %s, 0 fils",courant->nom,courant->pere->nom);
             }
 
         }else{ 
-            printf("Noeud %s (F), père : %s, 0 fils",nomCourant,nomPere);
+            printf("Noeud %s (F), père : %s, 0 fils", courant->nom,courant->pere->nom);
         }
         printf("\n");
         
@@ -47,8 +45,6 @@ void print(noeud *racine){
         }
 
         fifo = supprHead(fifo); 
-        free(nomCourant);
-        free(nomPere);
     }
     destroy_liste_noeud(fifo); 
 }
