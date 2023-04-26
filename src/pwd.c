@@ -6,8 +6,8 @@
 #include "../lib/struct.h"
 #include "../lib/ls.h"
 
+/*Affiche le chemin absolu de n depuis sa racine*/
 void pwd(noeud *n){
-
     if(n != n->racine){ 
 
         noeud *courant = n;

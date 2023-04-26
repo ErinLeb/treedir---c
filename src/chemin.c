@@ -9,7 +9,7 @@
  * fonction renvoyant le noeud au bout du chemin path en partant du noeud debut
  * @param debut noeud de départ
  * @param path chemin absolu ou relatif vers un noeud
- * @return renvoie un pointeur vers le noeud au bout de path en partant de noeud debut ou NULL si le chemin est incorrect 
+ * @return un pointeur vers le noeud au bout de path en partant de noeud debut ou NULL si le chemin est incorrect 
  */
 noeud *chemin(noeud *debut, char *path){
     if(strcmp(path,"") == 0 || strcmp(path,"/") == 0){
@@ -56,7 +56,7 @@ noeud *chemin(noeud *debut, char *path){
         else{
             bool fils = false;
             for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){
-                if(strcmp(getNom(get(courant->fils, i)),nom) == 0){
+                if(strcmp((get(courant->fils, i))->nom,nom) == 0){
                     courant = get(courant->fils, i);
                     fils = true;
                     break;

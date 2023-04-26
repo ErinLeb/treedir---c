@@ -20,8 +20,8 @@ typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
 extern void set_nom(noeud *, const char *);
-extern char *getNom(noeud *);
 extern noeud *get(liste_noeud *, int);
+extern noeud *get_by_name(noeud *, char*);
 extern bool has_son(noeud *, char *);
 extern bool is_correct(char *);
 extern int nombre_liste_noeud(liste_noeud *);
