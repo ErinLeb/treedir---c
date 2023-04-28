@@ -8,6 +8,7 @@
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
 #include "../lib/chemin.h"
+#include "../lib/cd.h"
 #include "../lib/cp.h"
 
 int main(){

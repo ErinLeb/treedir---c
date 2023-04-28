@@ -10,6 +10,7 @@
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
 #include "../lib/test_struct.h"
+#include "../lib/cd.h"
 #include "../lib/cp.h"
 
 void test_ls();
@@ -19,6 +20,7 @@ void test_touch();
 void test_pwd();
 void test_chemin();
 void test_struct();
+void test_cd();
 void test_cp();
 
 int main(){
@@ -36,6 +38,8 @@ int main(){
     test_pwd();
     printf("####################################\n");
     test_chemin();
+    printf("####################################\n");
+    test_cd();
     printf("####################################\n");
     test_cp();
     printf("####################################\n");
@@ -387,6 +391,35 @@ void test_chemin(){
     destroy_noeud(td2);
 
     printf("-------Test de chemin : fin-------\n");
+}
+
+void test_cd(){
+    printf("-------Test de cd : début-------\n\n");
+
+    noeud *racine = creer_racine();
+    noeud *n1 = creer_noeud(true,"dos1",racine,racine);
+    noeud *n2 = creer_noeud(true,"dos2",racine,racine);
+    liste_noeud *l = init_liste_noeud(n1);
+    l = pushTail(l,n2);
+    racine->fils = l;
+    noeud *courant = racine;
+
+    courant = cd(courant,"dos1");
+    assert(courant == n1);
+    courant = cd(courant,"/dos2");
+    assert(courant == n2);
+    courant = cd(courant,"..");
+    assert(courant == racine);
+    courant = cd(courant,"./dos1");
+    assert(courant == n1);
+    courant = cd(courant,"");
+    assert(courant = racine);
+
+    destroy_noeud(racine);
+    destroy_noeud(n1);
+    destroy_noeud(n2);
+
+    printf("-------Test de cd : fin-------\n");
 }
 
 void test_cp(){
