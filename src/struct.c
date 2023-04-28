@@ -239,5 +239,69 @@ char *getNom(noeud *n){
     return n->nom;
 }
 
+/**
+ * Vérifie si le noeud @code n2 est dans le sous arbre de racine @code n1
+ * @param n1 racine du sous arbre dans lequel on cherche @code n2
+ * @param n2 noeud dont on cherche la présence dans le sous arbre de racine @code n1
+ * @return true si @code n2 est dans le sous arbre de racine @code n1 et false sinon
+ */
+bool est_dans_sous_arbre(noeud *n1, noeud *n2){
+    noeud *tmp = n2;
+    while(tmp != n2->racine){
+        if(tmp == n1){
+            return true;
+        }
+        tmp = tmp->pere;
+    }
+    return tmp == n1;
+}
 
+/**
+ * crée une copie du noeud @code n
+ * @param n noeud à copier
+ * @return renvoie une copie du noeud @code n 
+ */
+noeud *copie(noeud *n){
+    if(n != n->racine){
+        noeud *c = creer_noeud(n->est_dossier,n->nom,n->racine,n->pere);
+        if(c->est_dossier && n->fils != NULL){
+            c->fils = init_liste_noeud(copie(get(n->fils,0)));
+            get(c->fils,0)->pere = c;
+            for(int i = 1; i < nombre_liste_noeud(n->fils); ++i){
+                pushTail(c->fils,copie(get(n->fils,i)));
+                get(c->fils,i)->pere = c;
+            }
+        }
+        return c;
+    }
+    else{
+        noeud *c = creer_racine();
+        if(n->fils != NULL){
+            c->fils = init_liste_noeud(copie(get(n->fils,0)));
+            get(c->fils,0)->pere = c;
+            for(int i = 1; i < nombre_liste_noeud(n->fils); ++i){
+                pushTail(c->fils,copie(get(n->fils,i)));
+                get(c->fils,i)->pere = c;
+            }
+        }
+        return c;
+    }
+    
+}
+
+/**
+ * libère la mémoire allouée pour l'arbre de racine @code racine 
+ */
+void destroy_arbre(noeud *racine){
+    if(racine->fils == NULL){
+        free(racine);
+    }
+    else{
+        for(int i = 0; i < nombre_liste_noeud(racine->fils); ++i){
+            destroy_arbre(get(racine->fils,i));
+        }
+        destroy_liste_noeud(racine->fils);
+        free(racine);
+    }
+}
 

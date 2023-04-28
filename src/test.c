@@ -10,6 +10,7 @@
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
 #include "../lib/test_struct.h"
+#include "../lib/cp.h"
 
 void test_ls();
 void test_print();
@@ -18,6 +19,7 @@ void test_touch();
 void test_pwd();
 void test_chemin();
 void test_struct();
+void test_cp();
 
 int main(){
     printf("####################################\n");
@@ -34,6 +36,8 @@ int main(){
     test_pwd();
     printf("####################################\n");
     test_chemin();
+    printf("####################################\n");
+    test_cp();
     printf("####################################\n");
 
 }
@@ -77,6 +81,12 @@ void test_struct(){
 
     puts("getNom");
     test_getNom();
+
+    puts("copie");
+    test_copie();
+
+    puts("est_dans_sous_arbre");
+    test_est_dans_sous_arbre();
 
     printf("\n-------Test de struct : fin-------\n");
 }
@@ -377,4 +387,53 @@ void test_chemin(){
     destroy_noeud(td2);
 
     printf("-------Test de chemin : fin-------\n");
+}
+
+void test_cp(){
+    printf("-------Test de cp : début-------\n\n");
+
+    noeud * racine = creer_racine();
+    
+    noeud *cours = creer_noeud(true,"Cours",racine,racine);
+    noeud *td = creer_noeud(true,"Td",racine,racine);
+    noeud *edt = creer_noeud(false,"edt",racine,racine);
+
+    liste_noeud *filsRacine = init_liste_noeud(cours);
+    filsRacine = pushTail(filsRacine,td);
+    filsRacine = pushTail(filsRacine,edt);
+    racine->fils = filsRacine;
+
+    noeud *projetC = creer_noeud(true,"ProjetC",racine,cours);
+    noeud *anglais = creer_noeud(true,"anglais",racine,cours);
+
+    cours->fils = pushTail(cours->fils,projetC);
+    cours->fils = pushTail(cours->fils,anglais);
+
+    noeud *td1 = creer_noeud(false,"td1",racine,td);
+    noeud *td2 = creer_noeud(false,"td2",racine,td);
+
+    td->fils = pushTail(td->fils,td1);
+    td->fils = pushTail(td->fils,td2);
+
+    cp(racine,"Td","Cours");
+    assert(nombre_liste_noeud(cours->fils) == 3);
+    assert(has_son(cours,"Td"));
+    assert(nombre_liste_noeud(get_by_name(cours,"Td")->fils) == 2);
+    assert(has_son(get_by_name(cours,"Td"),"td1"));
+    assert(has_son(get_by_name(cours,"Td"),"td2"));
+    
+    cp(racine,"Cours","Td/Maths");
+    assert(nombre_liste_noeud(td->fils) == 3);
+    assert(has_son(td,"Maths"));
+    assert(nombre_liste_noeud(get_by_name(td,"Maths")->fils) == 3);
+    assert(has_son(get_by_name(td,"Maths"),"ProjetC"));
+    assert(has_son(get_by_name(td,"Maths"),"anglais"));
+    assert(has_son(get_by_name(td,"Maths"),"Td"));
+    assert(nombre_liste_noeud(get_by_name(get_by_name(td,"Maths"),"Td")->fils) == 2);
+    assert(has_son(get_by_name(get_by_name(td,"Maths"),"Td"),"td1"));
+    assert(has_son(get_by_name(get_by_name(td,"Maths"),"Td"),"td2"));
+
+    destroy_arbre(racine);
+
+    printf("-------Test de cp : fin-------\n");
 }
