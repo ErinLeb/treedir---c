@@ -39,7 +39,7 @@ noeud *chemin(noeud *debut, char *path){
         assert(nom != NULL);
         for(int i=0; i < nom_len+1; ++i){
             if(i != nom_len){
-                nom[i] = path[i+chemin_parcouru];
+                nom[i] = path[i + chemin_parcouru];
             }
             else{
                 nom[i] = '\0';
