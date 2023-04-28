@@ -238,3 +238,6 @@ char *getNom(noeud *n){
     }
     return n->nom;
 }
+
+
+

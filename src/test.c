@@ -1,6 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<assert.h>
+#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/chemin.h"
 #include "../lib/ls.h"
@@ -323,6 +324,7 @@ void test_chemin(){
     td->fils = pushTail(td->fils,td1);
     td->fils = pushTail(td->fils,td2);
 
+    //tests de chemin
     assert(chemin(cours,"") == NULL);
     assert(chemin(cours,".") == cours);
     assert(chemin(cours,"././.") == cours);
@@ -334,6 +336,37 @@ void test_chemin(){
     assert(chemin(cours,"./ProjetC") == projetC);
     assert(chemin(cours,"math") == NULL);
 
+    //tests de cheminPrecedent
+    assert(chemin_precedent(cours,"") == NULL);
+    assert(chemin_precedent(cours,"/") == NULL);
+    assert(chemin_precedent(cours,"projetC") == cours);
+    assert(chemin_precedent(cours,"./projetC") == cours);
+    assert(chemin_precedent(cours,"math") == cours);
+    assert(chemin_precedent(cours,"/Td") == racine);
+    assert(chemin_precedent(cours,"/Cours/anglais") == cours);
+    assert(chemin_precedent(racine,"Cours/anglais/worksheets") == anglais);
+    assert(chemin_precedent(racine,"Cours/maths/Td1") == NULL);
+
+    //tests de getLastString
+    char *test = get_last_string("");
+    assert(strlen(test) == 0);
+    free(test);
+    test = get_last_string("anglais");
+    assert(strcmp(test,"anglais") == 0);
+    free(test);
+    test = get_last_string("/");
+    assert(strlen(test) == 0);
+    free(test);
+    test = get_last_string("anglais/worksheets");
+    assert(strcmp(test,"worksheets") == 0);
+    free(test);
+    test = get_last_string("/anglais");
+    assert(strcmp(test,"anglais") == 0);
+    free(test);
+    test = get_last_string("/anglais/worksheets");
+    assert(strcmp(test,"worksheets") == 0);
+    free(test);
+    
     destroy_noeud(racine);
     destroy_noeud(cours);
     destroy_noeud(td);
