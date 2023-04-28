@@ -16,5 +16,7 @@ extern void test_destroy_liste_noeud();
 extern void test_supprHead();
 extern void test_pushTail();
 extern void test_getNom();
+extern void test_est_dans_sous_arbre();
+extern void test_copie();
 
 #endif

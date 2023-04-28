@@ -225,3 +225,43 @@ void test_getNom(){
     destroy_noeud(racine);
     destroy_noeud(n);
 }
+
+void test_copie(){
+    noeud *racine = creer_racine();
+    noeud *n1 = creer_noeud(true,"dos1",racine,racine);
+    noeud *n2 = creer_noeud(true,"dos2",racine,racine);
+
+    liste_noeud *l = init_liste_noeud(n1);
+    l = pushTail(l,n2);
+    racine->fils = l;
+
+    noeud *c = copie(racine);
+
+    assert(strcmp(getNom(c),getNom(racine)) == 0);
+    assert(racine->est_dossier == c->est_dossier);
+    assert(nombre_liste_noeud(racine->fils) == nombre_liste_noeud(c->fils));
+    for(int i = 0; i < nombre_liste_noeud(racine->fils); ++i){
+        assert(strcmp(getNom(get(racine->fils,i)),getNom(get(c->fils,i))) == 0);
+        assert(get(racine->fils,i)->est_dossier == get(c->fils,i)->est_dossier);
+        assert(nombre_liste_noeud(get(racine->fils,i)->fils) == nombre_liste_noeud(get(c->fils,i)->fils));
+    }
+
+    destroy_arbre(racine);
+    destroy_arbre(c);
+}
+
+void test_est_dans_sous_arbre(){
+    noeud *racine = creer_racine();
+    noeud *n1 = creer_noeud(true,"dos1",racine,racine);
+    noeud *n2 = creer_noeud(true,"dos2",racine,racine);
+
+    liste_noeud *l = init_liste_noeud(n1);
+    l = pushTail(l,n2);
+
+    racine->fils = l;
+
+    assert(est_dans_sous_arbre(n1,n2) == false);
+    assert(est_dans_sous_arbre(racine,n1) == true);
+    
+    destroy_arbre(racine);
+}

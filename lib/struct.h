@@ -33,5 +33,9 @@ extern void destroy_liste_noeud();
 extern liste_noeud *supprHead(liste_noeud *);
 extern liste_noeud *pushTail(liste_noeud *, noeud *);
 extern char *getNom(noeud *);
+extern bool est_dans_sous_arbre(noeud *, noeud *);
+extern noeud *copie(noeud *);
+extern void destroy_arbre(noeud *);
+extern bool equals(noeud *, noeud *);
 
 #endif
