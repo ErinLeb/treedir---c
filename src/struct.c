@@ -6,6 +6,7 @@
 #include<ctype.h>
 #include "../lib/struct.h"
 
+
 /**
  * Modifie le nom du noeud donné en paramètre
  * @param n noeud dont on veut modifier le nom
@@ -104,8 +105,7 @@ bool is_correct(char *nom){
     return true;
 }
 
-/**
- * Renvoie le nombre de noeuds de la liste l
+/* Renvoie le nombre de noeuds de la liste l
  * @param l liste de noeuds dont on veut connaitre le nombre de noeuds
  * @return le nombre de noeuds de la liste l 
  */
@@ -188,6 +188,22 @@ void destroy_liste_noeud(liste_noeud *l){
 }
 
 /**
+ * libère la mémoire allouée pour l'arbre de racine @code racine 
+ */
+void destroy_arbre(noeud *racine){
+    if(racine->fils == NULL){
+        free(racine);
+    }
+    else{
+        for(int i = 0; i < nombre_liste_noeud(racine->fils); ++i){
+            destroy_arbre(get(racine->fils,i));
+        }
+        destroy_liste_noeud(racine->fils);
+        free(racine);
+    }
+}
+
+/**
  * Supprime la tête d'une liste de noeud
  * @param l liste dont on veut supprimer la tête
  * @return la nouvelle liste dont on a supprimé la tête 
@@ -228,18 +244,6 @@ liste_noeud *pushTail(liste_noeud *l, noeud *n){
 }
 
 /**
- * renvoie une chaine de charactère contenant le nom du noeud donné en paramètre
- * @param n noeud dont on veut le nom
- * @return renvoie une chaine de caractère contenant le nom du noeud n
- */
-char *getNom(noeud *n){
-    if(n == n->racine){
-        return "/";
-    }
-    return n->nom;
-}
-
-/**
  * Vérifie si le noeud @code n2 est dans le sous arbre de racine @code n1
  * @param n1 racine du sous arbre dans lequel on cherche @code n2
  * @param n2 noeud dont on cherche la présence dans le sous arbre de racine @code n1
@@ -257,9 +261,56 @@ bool est_dans_sous_arbre(noeud *n1, noeud *n2){
 }
 
 /**
- * crée une copie du noeud @code n
+ * Supprime le noeud n de la liste l sans libérer la mémoire qu'il occupe
+ * @param l liste de noeuds dans laquelle on veut supprimer n
+ * @param n le noeud que l'on veut supprimer
+ * @return la liste de noeuds modifiée
+*/
+liste_noeud *suppr_noeud_liste(liste_noeud *l, noeud *n){
+    if(l == NULL){
+        return NULL;
+    }
+
+    if(l->no == n){
+        l->no->pere = NULL;
+        liste_noeud *tmp = l;
+        l = l->succ;
+        free(tmp);
+        //on ne supprime pas le noeud de la mémoire
+    }else{
+        liste_noeud *tmp = l;
+        while(tmp->succ != NULL){
+            if(tmp->succ->no == n){
+                liste_noeud *next = tmp->succ; //ce qu'on veut supprimer
+                noeud *suppr = next->no;
+                tmp->succ = next->succ;
+                suppr->pere = NULL;
+                free(next);
+                //on ne supprime pas le noeud de la mémoire
+                return l;
+            }
+            tmp = tmp->succ;
+        }
+    }
+    return l;
+}
+
+/*
+ * Renvoie une chaine de charactère contenant le nom du noeud donné en paramètre
+ * @param n noeud dont on veut le nom
+ * @return une chaine de caractère contenant le nom du noeud n
+ */
+char *getNom(noeud *n){
+    if(n == n->racine){
+        return "/";
+    }
+    return n->nom;
+}
+
+/**
+ * Crée une copie du noeud @code n
  * @param n noeud à copier
- * @return renvoie une copie du noeud @code n 
+ * @return une copie du noeud @code n 
  */
 noeud *copie(noeud *n){
     if(n != n->racine){
@@ -285,23 +336,5 @@ noeud *copie(noeud *n){
             }
         }
         return c;
-    }
-    
+    } 
 }
-
-/**
- * libère la mémoire allouée pour l'arbre de racine @code racine 
- */
-void destroy_arbre(noeud *racine){
-    if(racine->fils == NULL){
-        free(racine);
-    }
-    else{
-        for(int i = 0; i < nombre_liste_noeud(racine->fils); ++i){
-            destroy_arbre(get(racine->fils,i));
-        }
-        destroy_liste_noeud(racine->fils);
-        free(racine);
-    }
-}
-
