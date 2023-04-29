@@ -124,8 +124,8 @@ void test_has_son(){
     noeud *n3 = creer_noeud(false, "fic1", racine, racine);
 
     liste_noeud *l= init_liste_noeud(n1);
-    pushTail(l, n2);
-    pushTail(l, n3);
+    l = pushTail(l, n2);
+    l = pushTail(l, n3);
     racine->fils = l;
 
     assert(has_son(racine, "dossier1"));
@@ -147,9 +147,9 @@ void test_get(){
     noeud *n4 = creer_noeud(false, "fic2", racine, racine);
 
     liste_noeud *l= init_liste_noeud(n1);
-    pushTail(l, n2);
-    pushTail(l, n3);
-    pushTail(l, n4);
+    l = pushTail(l, n2);
+    l = pushTail(l, n3);
+    l = pushTail(l, n4);
     racine->fils = l;
 
     assert(get(racine->fils, 0) == n1);
@@ -172,9 +172,9 @@ void test_get_by_name(){
     noeud *n4 = creer_noeud(false, "fic2", racine, racine);
 
     liste_noeud *l= init_liste_noeud(n1);
-    pushTail(l, n2);
-    pushTail(l, n3);
-    pushTail(l, n4);
+    l = pushTail(l, n2);
+    l = pushTail(l, n3);
+    l = pushTail(l, n4);
     racine->fils = l;
 
     assert(get_by_name(racine, "dossier1") == n1);
@@ -201,8 +201,8 @@ void test_supprHead(){
     assert(l == NULL);
 
     l = init_liste_noeud(n1);
-    pushTail(l, n2);
-    pushTail(l, n3);
+    l = pushTail(l, n2);
+    l = pushTail(l, n3);
 
     assert(nombre_liste_noeud(l) == 3);
     l = supprHead(l);
@@ -213,6 +213,41 @@ void test_supprHead(){
     destroy_noeud(n2);
     destroy_noeud(n3);
     destroy_liste_noeud(l);
+}
+
+void test_suppr_noeud_liste(){
+    noeud *racine = creer_racine();
+    noeud *n1 = creer_noeud(false, "fic1", racine, racine);
+    racine->fils = pushTail(racine->fils, n1);
+    noeud *n2 = creer_noeud(false, "fic2", racine, racine);
+    racine->fils = pushTail(racine->fils, n2);
+    noeud *n3 = creer_noeud(false, "fic3", racine, racine);
+    racine->fils = pushTail(racine->fils, n3);
+    assert(nombre_liste_noeud(racine->fils) == 3);
+    assert(get(racine->fils, 0) == n1);
+    assert(get(racine->fils, 1) == n2);
+    assert(get(racine->fils, 2) == n3);
+
+    racine->fils = suppr_noeud_liste(racine->fils, n2);
+    assert(n2->pere == NULL);
+    assert(nombre_liste_noeud(racine->fils) == 2);
+    assert(get(racine->fils, 0) == n1);
+    assert(get(racine->fils, 1) == n3);
+
+    racine->fils = suppr_noeud_liste(racine->fils, n1);
+    assert(n1->pere == NULL);
+    assert(nombre_liste_noeud(racine->fils) == 1);
+    assert(get(racine->fils, 0) == n3);
+
+    racine->fils = suppr_noeud_liste(racine->fils, n3);
+    assert(n3->pere == NULL);
+    assert(nombre_liste_noeud(racine->fils) == 0);
+    assert(racine->fils == NULL);
+
+    destroy_noeud(n3);
+    destroy_noeud(n2);
+    destroy_noeud(n1);
+    destroy_noeud(racine);
 }
 
 void test_getNom(){

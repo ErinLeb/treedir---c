@@ -10,6 +10,7 @@
 #include "../lib/chemin.h"
 #include "../lib/cd.h"
 #include "../lib/cp.h"
+#include "../lib/rm.h"
 
 int main(){
     noeud * racine = creer_racine();

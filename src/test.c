@@ -10,6 +10,7 @@
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
 #include "../lib/test_struct.h"
+#include "../lib/rm.h"
 #include "../lib/cd.h"
 #include "../lib/cp.h"
 
@@ -20,6 +21,7 @@ void test_touch();
 void test_pwd();
 void test_chemin();
 void test_struct();
+void test_rm();
 void test_cd();
 void test_cp();
 
@@ -38,6 +40,8 @@ int main(){
     test_pwd();
     printf("####################################\n");
     test_chemin();
+    printf("####################################\n");
+    test_rm();
     printf("####################################\n");
     test_cd();
     printf("####################################\n");
@@ -83,6 +87,9 @@ void test_struct(){
     puts("supprHead");
     test_supprHead();
 
+    puts("suppr_noeud_liste");
+    test_suppr_noeud_liste();
+    
     puts("getNom");
     test_getNom();
 
@@ -391,6 +398,43 @@ void test_chemin(){
     destroy_noeud(td2);
 
     printf("-------Test de chemin : fin-------\n");
+}
+
+void test_rm(){
+    printf("-------Test de rm : début-------\n");
+
+    noeud *racine = creer_racine();
+    //rm(racine, ""); //Ce chemin n'est pas valide.
+
+    noeud *n1 = creer_noeud(true, "dos1", racine, racine);
+    racine->fils = pushTail(racine->fils, n1);
+    assert(has_son(racine, "dos1"));
+    rm(racine, "dos1"); //ok
+    assert(!has_son(racine, "dos1"));
+
+    noeud *n1bis = creer_noeud(true, "dos1bis", racine, racine);
+    racine->fils = pushTail(racine->fils, n1bis);
+    assert(has_son(racine, "dos1bis"));
+
+    noeud *n3 = creer_noeud(true, "dos2", racine, n1bis);
+    n1bis->fils = pushTail(n1bis->fils, n3);
+    assert(has_son(n1bis, "dos2"));
+
+    //rm(n1bis, "/dos1bis"); //Le noeud à supprimer ne peut pas être un parent du noeud courant.
+
+    rm(n1bis, "dos2"); //ok
+    assert(!has_son(n1bis, "dos2"));
+
+    noeud *n4 = creer_noeud(true, "dos3", racine, n1bis);
+    n1bis->fils = pushTail(n1bis->fils, n4);
+    assert(has_son(n1bis, "dos3"));
+    rm(n1bis, "/dos1bis/dos3"); //ok
+    assert(!has_son(n1bis, "dos3"));
+
+    destroy_noeud(n1bis);
+    destroy_noeud(racine);
+
+    printf("-------Test de rm : fin-------\n");
 }
 
 void test_cd(){
