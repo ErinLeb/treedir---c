@@ -11,6 +11,7 @@
 #include "../lib/cd.h"
 #include "../lib/cp.h"
 #include "../lib/rm.h"
+#include "../lib/mv.h"
 
 int main(){
     noeud * racine = creer_racine();
