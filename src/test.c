@@ -13,6 +13,7 @@
 #include "../lib/rm.h"
 #include "../lib/cd.h"
 #include "../lib/cp.h"
+#include "../lib/mv.h"
 
 void test_ls();
 void test_print();
@@ -24,6 +25,7 @@ void test_struct();
 void test_rm();
 void test_cd();
 void test_cp();
+void test_mv();
 
 int main(){
     printf("####################################\n");
@@ -46,6 +48,8 @@ int main(){
     test_cd();
     printf("####################################\n");
     test_cp();
+    printf("####################################\n");
+    test_mv();
     printf("####################################\n");
 
 }
@@ -513,4 +517,58 @@ void test_cp(){
     destroy_arbre(racine);
 
     printf("-------Test de cp : fin-------\n");
+}
+
+void test_mv(){
+    printf("-------Test de mv : début-------\n\n");
+
+    noeud * racine = creer_racine();
+    
+    noeud *cours = creer_noeud(true,"Cours",racine,racine);
+    noeud *td = creer_noeud(true,"Td",racine,racine);
+    noeud *edt = creer_noeud(false,"edt",racine,racine);
+
+    liste_noeud *filsRacine = init_liste_noeud(cours);
+    filsRacine = pushTail(filsRacine,td);
+    filsRacine = pushTail(filsRacine,edt);
+    racine->fils = filsRacine;
+
+    noeud *projetC = creer_noeud(true,"ProjetC",racine,cours);
+    noeud *anglais = creer_noeud(true,"anglais",racine,cours);
+
+    cours->fils = pushTail(cours->fils,projetC);
+    cours->fils = pushTail(cours->fils,anglais);
+
+    noeud *td1 = creer_noeud(false,"td1",racine,td);
+    noeud *td2 = creer_noeud(false,"td2",racine,td);
+
+    td->fils = pushTail(td->fils,td1);
+    td->fils = pushTail(td->fils,td2);
+
+    mv(racine,"Td","Cours");
+    assert(nombre_liste_noeud(racine->fils) == 2);
+    assert(!has_son(racine,"Td"));
+    assert(nombre_liste_noeud(cours->fils) == 3);
+    assert(has_son(cours,"Td"));
+    assert(td->pere == cours);
+    assert(nombre_liste_noeud(td->fils) == 2);
+
+    mv(racine,"Cours/Td/td1","td3");
+    assert(nombre_liste_noeud(td->fils) == 1);
+    assert(nombre_liste_noeud(racine->fils) == 3);
+    assert(strcmp(getNom(td1),"td3") == 0);
+    assert(has_son(racine,"td3"));
+    assert(!has_son(td,"td1"));
+    assert(td1->pere == racine);
+
+    mv(racine,"Cours/Td/td2","Cours/Td/td1");
+    assert(nombre_liste_noeud(td->fils) == 1);
+    assert(strcmp(getNom(td2),"td1") == 0);
+    assert(has_son(td,"td1"));
+    assert(!has_son(td,"td2"));
+    assert(td2->pere == td);
+
+    destroy_arbre(racine);
+
+    printf("-------Test de mv : fin-------\n");
 }
