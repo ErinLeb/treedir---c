@@ -3,6 +3,6 @@
 
 #include "struct.h"
 
-extern void cp(noeud *, char *, char *);
+extern void cp(char *, char *);
 
 #endif //CP_H

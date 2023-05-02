@@ -7,12 +7,11 @@
 #include <stdbool.h>
 
 /**
- * crée une copie du noeud situé au bout du chemin @code chem1 et la déplace dans le dossier situé au bout du chemin @code chem2 en partant du noeud @code courant
- * @param courant noeud de départ
+ * Crée une copie du noeud situé au bout du chemin @code chem1 et la déplace dans le dossier situé au bout du chemin @code chem2 en partant du noeud @code courant
  * @param chem1 chemin vers le noeud à copier
  * @param chem2 chemin vers le dossier de destination
  */
-void cp(noeud *courant, char *chem1, char *chem2){
+void cp(char *chem1, char *chem2){
     noeud *src = chemin(courant, chem1);
     if(src == NULL){
         perror("Le chemin 1 n'existe pas.");

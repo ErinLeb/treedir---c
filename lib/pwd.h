@@ -2,6 +2,6 @@
 #define PWD_H
 #include "struct.h"
 
-extern void pwd(noeud *);
+extern void pwd();
 
 #endif //PWD_H

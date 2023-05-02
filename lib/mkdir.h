@@ -3,6 +3,6 @@
 
 #include "struct.h"
 
-void mkdir(noeud *, char *);
+void mkdir(char *);
 
 #endif

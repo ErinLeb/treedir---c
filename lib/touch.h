@@ -3,6 +3,6 @@
 
 #include "struct.h"
 
-extern void touch(noeud *, char *);
+extern void touch(char *);
 
 #endif

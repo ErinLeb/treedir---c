@@ -6,10 +6,10 @@
 #include "../lib/print.h"
 
 /**
- * Effectue un parcours en largeur de l'arbre et affiche son contenu
- * @param racine noeud racine de l'arbre
+ * Effectue un parcours en largeur de l'arbre et affiche son contenu, en partant de la racine du noeud courant
  */
-void print(noeud *racine){
+void print(){
+    noeud *racine = courant ->racine;
     liste_noeud *fifo = init_liste_noeud(racine);
 
     while(fifo != NULL){

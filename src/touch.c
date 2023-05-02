@@ -2,12 +2,14 @@
  #include "../lib/struct.h"
  #include "../lib/touch.h"
 
-/*Crée un fichier fils à n, portant le nom en paramètre*/
-void touch(noeud *n, char *nom){
-  assert(n->est_dossier);
+/**
+ * Crée un fichier fils au noeud courant , portant le nom @code nom
+*/
+void touch(char *nom){
+  assert(courant->est_dossier);
   assert(is_correct(nom));
-  assert(!has_son(n, nom));
+  assert(!has_son(courant, nom));
 
-  noeud *fils = creer_noeud(false, nom, n->racine, n);
-  n->fils = pushTail(n->fils, fils);
+  noeud *fils = creer_noeud(false, nom, courant->racine, courant);
+  courant->fils = pushTail(courant->fils, fils);
 }

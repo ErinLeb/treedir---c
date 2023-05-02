@@ -6,32 +6,34 @@
 #include "../lib/struct.h"
 #include "../lib/ls.h"
 
-/*Affiche le chemin absolu de n depuis sa racine*/
-void pwd(noeud *n){
-    if(n != n->racine){ 
+/**
+ * Affiche le chemin absolu du noeud courant depuis sa racine
+*/
+void pwd(){
+    if(courant != courant->racine){ 
 
-        noeud *courant = n;
-        char *chemin = malloc(sizeof(char) * (strlen(courant->nom) + 2)); // on alloue une chaine de caractère qui contiendra le nom du noeud n précédé d'un '/' et suivi d'un '\0'
+        noeud *tmp = courant;
+        char *chemin = malloc(sizeof(char) * (strlen(tmp->nom) + 2)); // on alloue une chaine de caractère qui contiendra le nom du noeud courant précédé d'un '/' et suivi d'un '\0'
         assert(chemin != NULL);
-        int taille_chemin = strlen(courant->nom) + 2;
+        int taille_chemin = strlen(tmp->nom) + 2;
         chemin[0] = '/';
 
-        for(int i = 0; i < strlen(courant->nom); ++i){
-            chemin[i+1] = courant->nom[i];
+        for(int i = 0; i < strlen(tmp->nom); ++i){
+            chemin[i+1] = tmp->nom[i];
         }
 
-        chemin[strlen(courant->nom) + 1] = '\0';
+        chemin[strlen(tmp->nom) + 1] = '\0';
 
-        while(courant->pere != n->racine){ 
-            courant = courant->pere;
-            chemin = realloc(chemin, taille_chemin + strlen(courant->nom) + 1); // on réalloue la chaine de caractère en lui ajoutant la taille du nom du nouveau noeud courant +1 pour le '/'
+        while(tmp->pere != courant->racine){ 
+            tmp = tmp->pere;
+            chemin = realloc(chemin, taille_chemin + strlen(tmp->nom) + 1); // on réalloue la chaine de caractère en lui ajoutant la taille du nom du nouveau noeud tmp +1 pour le '/'
             assert(chemin != NULL);
-            memmove(chemin + strlen(courant->nom) + 1, chemin, taille_chemin); // on décale l'ancien chemin pour pouvoir ensuite ajouter le nom du noeud courant au début
+            memmove(chemin + strlen(tmp->nom) + 1, chemin, taille_chemin); // on décale l'ancien chemin pour pouvoir ensuite ajouter le nom du noeud tmp au début
             chemin[0] = '/';
-            for(int i = 0; i < strlen(courant->nom); ++i){
-                chemin[i+1] = courant->nom[i];
+            for(int i = 0; i < strlen(tmp->nom); ++i){
+                chemin[i+1] = tmp->nom[i];
             }
-            taille_chemin += strlen(courant->nom) + 1;
+            taille_chemin += strlen(tmp->nom) + 1;
         }
         // on affiche le chemin
         printf("%s\n", chemin);
