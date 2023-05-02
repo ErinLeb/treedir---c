@@ -5,16 +5,15 @@
 #include <string.h>
 
 /**
- * renvoie le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
- * @param courant noeud de départ
+ * Renvoie le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
  * @param path chemin vers le noeud souhaité
  * @return un pointeur vers le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
  */
-noeud *cd(noeud *courant, char *path){
+noeud *cd(char *path){
     if(strlen(path) == 0){
         return courant->racine;
     }
-    noeud *n = chemin(courant,path);
+    noeud *n = chemin(courant, path);
     if(n == NULL){
         perror("Le chemin est invalide.");
         exit(1);

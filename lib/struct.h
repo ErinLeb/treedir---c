@@ -19,6 +19,8 @@ struct liste_noeud{
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
+extern noeud *courant;
+
 extern void set_nom(noeud *, const char *);
 extern noeud *get(liste_noeud *, int);
 extern noeud *get_by_name(noeud *, char*);

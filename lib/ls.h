@@ -2,6 +2,6 @@
 #define LS_H
 #include "struct.h"
 
-extern void ls(noeud *);
+extern void ls();
 
 #endif //LS_H

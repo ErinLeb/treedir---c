@@ -6,9 +6,9 @@
 #include "../lib/struct.h"
 #include "../lib/ls.h"
 
-/* Affiche sur le terminal la liste des noms des fils du noeud n*/
-void ls(noeud *n){
-    liste_noeud *tmp = n->fils;
+/* Affiche sur le terminal la liste des noms des fils du noeud courant*/
+void ls(){
+    liste_noeud *tmp = courant->fils;
     while(tmp != NULL){
         printf("%s ", tmp->no->nom);
         tmp = tmp->succ;

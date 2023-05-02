@@ -3,6 +3,6 @@
 
 #include "struct.h"
 
-extern void mv(noeud *, char *, char *);
+extern void mv(char *, char *);
 
 #endif //MV_H

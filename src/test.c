@@ -123,15 +123,17 @@ void test_ls(){
     liste_noeud *l2 = init_liste_noeud(n5);
     n2->fils = l2;
 
+    courant = n1;
     puts("Attendu : sousDossier1 sousDossier2 fichier1");
     printf ("Resultat de ls : ");
-    ls(n1);
+    ls();
 
     puts("");
 
+    courant = n2;
     puts("Attendu : fichier2");
     printf("Resultat de ls : ");
-    ls(n2);
+    ls();
 
     puts("");
 
@@ -170,13 +172,15 @@ void test_print(){
     td->fils = pushTail(td->fils,td1);
     td->fils = pushTail(td->fils,td2);
 
+    courant = racine;
+
     char * attendu = "Noeud / (D), père : /, 3 fils : Cours (D), Td (D), edt (F)\nNoeud Cours (D), père : /, 2 fils : ProjetC (D), anglais (D)\nNoeud Td (D), père : /, 2 fils : td1 (F), td2 (F)\nNoeud edt (F), père : /, 0 fils\nNoeud ProjetC (D), père : Cours, 0 fils\nNoeud anglais (D), père : Cours, 0 fils\nNoeud td1 (F), père : Td, 0 fils\nNoeud td2 (F), père : Td, 0 fils";
 
     printf("Attendu :\n%s\n", attendu);
     puts("");
 
     puts("Resultat de print : ");
-    print(racine);
+    print();
     puts("");
 
     destroy_noeud(racine);
@@ -196,8 +200,9 @@ void test_mkdir(){
 
     noeud * racine = creer_racine();
 
+    courant = racine;
     assert(!has_son(racine, "Cours"));
-    mkdir(racine, "Cours");
+    mkdir("Cours");
     assert(has_son(racine, "Cours"));
     noeud *cours = get_by_name(racine, "Cours");
     assert(cours->est_dossier);
@@ -205,7 +210,7 @@ void test_mkdir(){
     assert(cours->racine == racine->racine);
     assert(cours->pere == racine);
 
-    mkdir(racine, "Td");
+    mkdir("Td");
     assert(has_son(racine, "Td"));
     assert(has_son(racine, "Cours"));
     noeud * td = get_by_name(racine, "Td");
@@ -214,7 +219,8 @@ void test_mkdir(){
     assert(td->racine == racine->racine);
     assert(td->pere == racine);
 
-    mkdir(cours, "ProjetC");
+    courant = cours;
+    mkdir("ProjetC");
     assert(has_son(cours, "ProjetC"));
     noeud * projetC = get_by_name(cours, "ProjetC");
     assert(projetC->est_dossier);
@@ -222,7 +228,7 @@ void test_mkdir(){
     assert(projetC->racine == cours->racine);
     assert(projetC->pere == cours);
 
-    mkdir(cours, "Anglais");
+    mkdir("Anglais");
     assert(has_son(cours, "ProjetC"));
     assert(has_son(cours, "Anglais"));
     noeud *anglais = get_by_name(cours, "Anglais");
@@ -245,14 +251,15 @@ void test_touch(){
 
     noeud * racine = creer_racine();
 
-    touch(racine, "Texte1");
+    courant = racine;
+    touch("Texte1");
     assert(has_son(racine, "Texte1"));
     noeud *texte1 = get_by_name(racine, "Texte1");
     assert(!texte1->est_dossier);
     assert(texte1->pere == racine);
     assert(texte1->racine == racine);
 
-    touch(racine, "Texte2");
+    touch("Texte2");
     assert(has_son(racine, "Texte1"));
     assert(has_son(racine, "Texte2"));
     noeud *texte2 = get_by_name(racine, "Texte2");
@@ -293,21 +300,26 @@ void test_pwd(){
     td->fils = pushTail(td->fils,td1);
     td->fils = pushTail(td->fils,td2);
 
+    courant = racine;
+
     puts("Attendu : /");
     printf("Résultat de pwd : ");
-    pwd(racine);
+    pwd();
 
+    courant = cours;
     puts("\nAttendu : /Cours");
     printf("Résultat de pwd : ");
-    pwd(cours);
+    pwd();
 
+    courant = anglais;
     puts("\nAttendu : /Cours/Anglais");
     printf("Résultat de pwd : ");
-    pwd(anglais);
+    pwd();
 
+    courant = td1;
     puts("\nAttendu : /Td/td1");
     printf("Résultat de pwd : ");
-    pwd(td1);
+    pwd();
 
     puts("");
 
@@ -405,15 +417,16 @@ void test_chemin(){
 }
 
 void test_rm(){
-    printf("-------Test de rm : début-------\n");
+    printf("-------Test de rm : début-------\n\n");
 
     noeud *racine = creer_racine();
-    //rm(racine, ""); //Ce chemin n'est pas valide.
+    courant = racine;
+    //rm(""); //Ce chemin n'est pas valide.
 
     noeud *n1 = creer_noeud(true, "dos1", racine, racine);
     racine->fils = pushTail(racine->fils, n1);
     assert(has_son(racine, "dos1"));
-    rm(racine, "dos1"); //ok
+    rm("dos1"); //ok
     assert(!has_son(racine, "dos1"));
 
     noeud *n1bis = creer_noeud(true, "dos1bis", racine, racine);
@@ -424,15 +437,16 @@ void test_rm(){
     n1bis->fils = pushTail(n1bis->fils, n3);
     assert(has_son(n1bis, "dos2"));
 
-    //rm(n1bis, "/dos1bis"); //Le noeud à supprimer ne peut pas être un parent du noeud courant.
+    courant = n1bis;
+    //rm("/dos1bis"); //le noeud à supprimer ne peut pas être un parent du noeud courant.
 
-    rm(n1bis, "dos2"); //ok
+    rm("dos2"); //ok
     assert(!has_son(n1bis, "dos2"));
 
     noeud *n4 = creer_noeud(true, "dos3", racine, n1bis);
     n1bis->fils = pushTail(n1bis->fils, n4);
     assert(has_son(n1bis, "dos3"));
-    rm(n1bis, "/dos1bis/dos3"); //ok
+    rm("/dos1bis/dos3"); //ok
     assert(!has_son(n1bis, "dos3"));
 
     destroy_noeud(n1bis);
@@ -450,18 +464,18 @@ void test_cd(){
     liste_noeud *l = init_liste_noeud(n1);
     l = pushTail(l,n2);
     racine->fils = l;
-    noeud *courant = racine;
+    courant = racine;
 
-    courant = cd(courant,"dos1");
+    courant = cd("dos1");
     assert(courant == n1);
-    courant = cd(courant,"/dos2");
+    courant = cd("/dos2");
     assert(courant == n2);
-    courant = cd(courant,"..");
+    courant = cd("..");
     assert(courant == racine);
-    courant = cd(courant,"./dos1");
+    courant = cd("./dos1");
     assert(courant == n1);
-    courant = cd(courant,"");
-    assert(courant = racine);
+    courant = cd("");
+    assert(courant == racine);
 
     destroy_noeud(racine);
     destroy_noeud(n1);
@@ -496,14 +510,16 @@ void test_cp(){
     td->fils = pushTail(td->fils,td1);
     td->fils = pushTail(td->fils,td2);
 
-    cp(racine,"Td","Cours");
+    courant = racine;
+
+    cp("Td","Cours");
     assert(nombre_liste_noeud(cours->fils) == 3);
     assert(has_son(cours,"Td"));
     assert(nombre_liste_noeud(get_by_name(cours,"Td")->fils) == 2);
     assert(has_son(get_by_name(cours,"Td"),"td1"));
     assert(has_son(get_by_name(cours,"Td"),"td2"));
     
-    cp(racine,"Cours","Td/Maths");
+    cp("Cours","Td/Maths");
     assert(nombre_liste_noeud(td->fils) == 3);
     assert(has_son(td,"Maths"));
     assert(nombre_liste_noeud(get_by_name(td,"Maths")->fils) == 3);
@@ -524,28 +540,29 @@ void test_mv(){
 
     noeud * racine = creer_racine();
     
-    noeud *cours = creer_noeud(true,"Cours",racine,racine);
-    noeud *td = creer_noeud(true,"Td",racine,racine);
-    noeud *edt = creer_noeud(false,"edt",racine,racine);
+    noeud *cours = creer_noeud(true, "Cours", racine, racine);
+    noeud *td = creer_noeud(true, "Td", racine, racine);
+    noeud *edt = creer_noeud(false, "edt", racine, racine);
 
     liste_noeud *filsRacine = init_liste_noeud(cours);
-    filsRacine = pushTail(filsRacine,td);
-    filsRacine = pushTail(filsRacine,edt);
+    filsRacine = pushTail(filsRacine, td);
+    filsRacine = pushTail(filsRacine, edt);
     racine->fils = filsRacine;
 
-    noeud *projetC = creer_noeud(true,"ProjetC",racine,cours);
-    noeud *anglais = creer_noeud(true,"anglais",racine,cours);
+    noeud *projetC = creer_noeud(true, "ProjetC", racine, cours);
+    noeud *anglais = creer_noeud(true, "anglais", racine, cours);
 
-    cours->fils = pushTail(cours->fils,projetC);
-    cours->fils = pushTail(cours->fils,anglais);
+    cours->fils = pushTail(cours->fils, projetC);
+    cours->fils = pushTail(cours->fils, anglais);
 
-    noeud *td1 = creer_noeud(false,"td1",racine,td);
-    noeud *td2 = creer_noeud(false,"td2",racine,td);
+    noeud *td1 = creer_noeud(false, "td1", racine, td);
+    noeud *td2 = creer_noeud(false, "td2", racine, td);
 
-    td->fils = pushTail(td->fils,td1);
-    td->fils = pushTail(td->fils,td2);
+    td->fils = pushTail(td->fils, td1);
+    td->fils = pushTail(td->fils, td2);
 
-    mv(racine,"Td","Cours");
+    courant = racine;
+    mv("Td", "Cours");
     assert(nombre_liste_noeud(racine->fils) == 2);
     assert(!has_son(racine,"Td"));
     assert(nombre_liste_noeud(cours->fils) == 3);
@@ -553,19 +570,19 @@ void test_mv(){
     assert(td->pere == cours);
     assert(nombre_liste_noeud(td->fils) == 2);
 
-    mv(racine,"Cours/Td/td1","td3");
+    mv("Cours/Td/td1", "td3");
     assert(nombre_liste_noeud(td->fils) == 1);
     assert(nombre_liste_noeud(racine->fils) == 3);
-    assert(strcmp(getNom(td1),"td3") == 0);
-    assert(has_son(racine,"td3"));
-    assert(!has_son(td,"td1"));
+    assert(strcmp(getNom(td1), "td3") == 0);
+    assert(has_son(racine, "td3"));
+    assert(!has_son(td, "td1"));
     assert(td1->pere == racine);
 
-    mv(racine,"Cours/Td/td2","Cours/Td/td1");
+    mv("Cours/Td/td2", "Cours/Td/td1");
     assert(nombre_liste_noeud(td->fils) == 1);
-    assert(strcmp(getNom(td2),"td1") == 0);
-    assert(has_son(td,"td1"));
-    assert(!has_son(td,"td2"));
+    assert(strcmp(getNom(td2), "td1") == 0);
+    assert(has_son(td, "td1"));
+    assert(!has_son(td, "td2"));
     assert(td2->pere == td);
 
     destroy_arbre(racine);

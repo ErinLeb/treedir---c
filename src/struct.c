@@ -6,6 +6,7 @@
 #include<ctype.h>
 #include "../lib/struct.h"
 
+noeud * courant;
 
 /**
  * Modifie le nom du noeud donné en paramètre

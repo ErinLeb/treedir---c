@@ -6,17 +6,16 @@
 
 /**
  * Détruit le noeud et toute sa descendance indiqué par path
- * @param n noeud courant
  * @param path l'adresse du noeud à supprimer 
 */
-void rm(noeud *n, char *path){
-    noeud *s = chemin(n, path);
+void rm(char *path){
+    noeud *s = chemin(courant, path);
     if(s == NULL){
         perror("Ce chemin n'est pas valide.");
         exit(1);
     }
 
-    if(est_dans_sous_arbre(s, n)){
+    if(est_dans_sous_arbre(s, courant)){
         perror("Le noeud à supprimer ne peut pas être un parent du noeud courant.");
         exit(1);
     }

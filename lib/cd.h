@@ -3,6 +3,6 @@
 
 #include "struct.h"
 
-extern noeud *cd(noeud *, char *);
+extern noeud *cd(char *);
 
 #endif //CD_H

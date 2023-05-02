@@ -14,6 +14,6 @@
 #include "../lib/mv.h"
 
 int main(){
-    noeud * racine = creer_racine();
+    courant = creer_racine();
 }
 
