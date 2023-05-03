@@ -35,7 +35,7 @@ noeud *chemin(noeud *debut, char *path){
             ++nom_len;
             ++lecture;
         }
-        nom = realloc(nom,sizeof(char)*nom_len+1);
+        nom = realloc(nom, sizeof(char *) * (nom_len + 1));
         assert(nom != NULL);
         for(int i=0; i < nom_len+1; ++i){
             if(i != nom_len){
@@ -95,7 +95,7 @@ char *get_last_string(char *path){
         }
     }
     if(nbSlash == 0){
-        char *nom = malloc(sizeof(char) * strlen(path) + 1);
+        char *nom = malloc(sizeof(char *) * (strlen(path) + 1));
         assert(nom != NULL);
         for(int i = 0; i < strlen(path) + 1; ++i){
             if(i == strlen(path)){
@@ -117,7 +117,7 @@ char *get_last_string(char *path){
             ++indiceSlash;
         }
     }
-    char *nom = malloc(sizeof(char) * (strlen(path)-indiceSlash));
+    char *nom = malloc(sizeof(char *) * (strlen(path)-indiceSlash));
     assert(nom != NULL);
     for(int i = 0; i < strlen(path) - indiceSlash + 1; ++i){
         if(i == strlen(path) - indiceSlash){
@@ -162,7 +162,7 @@ noeud *chemin_precedent(noeud *debut, char *path){
             ++indiceSlash;
         }
     }
-    char *newPath = malloc(sizeof(char) * indiceSlash);
+    char *newPath = malloc(sizeof(char *) * indiceSlash);
     assert(newPath != NULL);
     for(int i = 0; i < indiceSlash + 1; ++i){
         if(i == indiceSlash){
