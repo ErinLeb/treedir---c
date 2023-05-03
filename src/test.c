@@ -474,7 +474,7 @@ void test_cd(){
     assert(courant == racine);
     courant = cd("./dos1");
     assert(courant == n1);
-    courant = cd("");
+    courant = cd(NULL);
     assert(courant == racine);
 
     destroy_noeud(racine);

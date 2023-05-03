@@ -10,7 +10,7 @@
  * @return un pointeur vers le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
  */
 noeud *cd(char *path){
-    if(strlen(path) == 0){
+    if(path == NULL){
         return courant->racine;
     }
     noeud *n = chemin(courant, path);
