@@ -1,6 +1,5 @@
 #include<stdbool.h>
 #include<stdlib.h>
-#include<assert.h>
 #include<string.h>
 #include<stdio.h>
 #include<ctype.h>
@@ -13,11 +12,18 @@ noeud * courant;
  * @param n noeud dont on veut modifier le nom
  * @param str nouveau nom du noeud 
  */
-void set_nom(noeud *n, const char *str){
-    assert(strlen(str) < 100);
-
-    for(int i = 0; i<=strlen(str); ++i){
-        n->nom[i] = *(str+i);
+void set_nom(noeud *n, char *str){
+    if(n == n->racine && strcmp(str,"") == 0){
+        n->nom[0] = '\0';
+    }
+    else if(!is_correct(str)){
+        perror("Nom incorrect.");
+        exit(EXIT_FAILURE);
+    }
+    else{
+        for(int i = 0; i<=strlen(str); ++i){
+            n->nom[i] = *(str+i);
+        }
     }
 }
 
@@ -28,7 +34,10 @@ void set_nom(noeud *n, const char *str){
  * @return le noeud à l'indice i de la liste 
  */
 noeud *get(liste_noeud *l, int i){
-    assert(i < nombre_liste_noeud(l) && i >= 0);
+    if(i >= nombre_liste_noeud(l) || i < 0){
+        perror("Indice incorrect.");
+        exit(EXIT_FAILURE);
+    }
     liste_noeud *courant = l;
     for(int j = 0; j < i; ++j){
         courant = courant->succ;
@@ -89,16 +98,12 @@ bool has_son(noeud *n,  char *nom){
  * @return true si nom n'est composé que de caractères alpha-numériques, n'est pas vide et fait moins de 100 caractères, false sinon
 */
 bool is_correct(char *nom){
-    assert(strlen(nom) > 0);
-    assert(strlen(nom) < 100 );
+    if(strlen(nom) < 1 || strlen(nom) > 99){
+        return false;
+    }
 
     while(*nom != '\0'){
         if(!isalnum(*nom)){
-            puts("not alhpa-numeric");
-            return false;
-        }
-        if(isspace(*nom)){
-            puts("is space");
             return false;
         }
         nom++;
@@ -125,11 +130,15 @@ int nombre_liste_noeud(liste_noeud *l){
  */
 noeud *creer_racine(){
     noeud * racine = malloc(sizeof(noeud));
-    set_nom(racine, "");
+    if(racine == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     racine->est_dossier = true;
     racine->pere = racine;
     racine->racine = racine;
     racine->fils = NULL;
+    set_nom(racine, "");
 
     return racine;
 }
@@ -142,14 +151,17 @@ noeud *creer_racine(){
  * @param pere père du noeud
  * @return un noeud sans enfant 
  */
-noeud *creer_noeud(bool dossier, const char *nom, noeud *racine, noeud *pere){
+noeud *creer_noeud(bool dossier, char *nom, noeud *racine, noeud *pere){
     noeud *n = malloc(sizeof(noeud));
-    assert(n != NULL);
+    if(n == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     n->est_dossier = dossier;
-    set_nom(n, nom);
     n->pere = pere;
     n->racine = racine;
     n->fils = NULL;
+    set_nom(n, nom);
     return n;
 }
 
@@ -160,7 +172,10 @@ noeud *creer_noeud(bool dossier, const char *nom, noeud *racine, noeud *pere){
  */
 liste_noeud *init_liste_noeud(noeud *n){
     liste_noeud *l = malloc(sizeof(liste_noeud));
-    assert(l != NULL);
+    if(l == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     l->no = n;
     l->succ = NULL;
     return l;

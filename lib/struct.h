@@ -21,14 +21,14 @@ typedef struct liste_noeud liste_noeud;
 
 extern noeud *courant;
 
-extern void set_nom(noeud *, const char *);
+extern void set_nom(noeud *, char *);
 extern noeud *get(liste_noeud *, int);
 extern noeud *get_by_name(noeud *, char*);
 extern bool has_son(noeud *, char *);
 extern bool is_correct(char *);
 extern int nombre_liste_noeud(liste_noeud *);
 extern noeud *creer_racine();
-extern noeud *creer_noeud(bool, const char *, noeud *, noeud *);
+extern noeud *creer_noeud(bool, char *, noeud *, noeud *);
 extern liste_noeud *init_liste_noeud(noeud *);
 extern void destroy_noeud(noeud *);
 extern void destroy_liste_noeud();

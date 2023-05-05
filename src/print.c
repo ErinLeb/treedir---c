@@ -1,7 +1,6 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
-#include<assert.h>
 #include "../lib/struct.h"
 #include "../lib/print.h"
 

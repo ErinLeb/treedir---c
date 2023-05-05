@@ -12,12 +12,12 @@ void rm(char *path){
     noeud *s = chemin(courant, path);
     if(s == NULL){
         perror("Ce chemin n'est pas valide.");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     if(est_dans_sous_arbre(s, courant)){
         perror("Le noeud à supprimer ne peut pas être un parent du noeud courant.");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     
     noeud *pere = s->pere;

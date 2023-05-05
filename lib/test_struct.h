@@ -1,6 +1,5 @@
 #ifndef TEST_STRUCT_H
 #define TEST_STRUCT_H
-#include"struct.h"
 
 extern void test_is_correct();
 extern void test_creer_racine();

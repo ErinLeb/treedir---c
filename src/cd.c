@@ -9,18 +9,20 @@
  * @param path chemin vers le noeud souhaité
  * @return un pointeur vers le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
  */
-noeud *cd(char *path){
+void cd(char *path){
     if(path == NULL){
-        return courant->racine;
+        courant = courant->racine;
     }
-    noeud *n = chemin(courant, path);
-    if(n == NULL){
-        perror("Le chemin est invalide.");
-        exit(1);
+    else{
+        noeud *n = chemin(courant, path);
+        if(n == NULL){
+            perror("Le chemin est invalide.");
+            exit(EXIT_FAILURE);
+        }
+        if(!n->est_dossier){
+            perror("Le chemin ne désigne pas un dossier.");
+            exit(EXIT_FAILURE);
+        }
+        courant = n;
     }
-    if(!n->est_dossier){
-        perror("Le chemin ne désigne pas un dossier.");
-        exit(1);
-    }
-    return n;
 }

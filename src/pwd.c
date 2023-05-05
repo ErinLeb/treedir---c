@@ -1,4 +1,3 @@
-#include<assert.h>
 #include<stdlib.h>
 #include<stdio.h>
 #include <stdbool.h>
@@ -14,7 +13,10 @@ void pwd(){
 
         noeud *tmp = courant;
         char *chemin = malloc(sizeof(char) * (strlen(tmp->nom) + 2)); // on alloue une chaine de caractère qui contiendra le nom du noeud courant précédé d'un '/' et suivi d'un '\0'
-        assert(chemin != NULL);
+        if(chemin == NULL){
+            perror("Problème d'allocation.");
+            exit(EXIT_FAILURE);
+        }
         int taille_chemin = strlen(tmp->nom) + 2;
         chemin[0] = '/';
 
@@ -27,7 +29,10 @@ void pwd(){
         while(tmp->pere != courant->racine){ 
             tmp = tmp->pere;
             chemin = realloc(chemin, taille_chemin + strlen(tmp->nom) + 1); // on réalloue la chaine de caractère en lui ajoutant la taille du nom du nouveau noeud tmp +1 pour le '/'
-            assert(chemin != NULL);
+            if(chemin == NULL){
+                perror("Problème d'allocation.");
+                exit(EXIT_FAILURE);
+            }
             memmove(chemin + strlen(tmp->nom) + 1, chemin, taille_chemin); // on décale l'ancien chemin pour pouvoir ensuite ajouter le nom du noeud tmp au début
             chemin[0] = '/';
             for(int i = 0; i < strlen(tmp->nom); ++i){

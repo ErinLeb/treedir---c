@@ -1,6 +1,5 @@
 #ifndef LS_H
 #define LS_H
-#include "struct.h"
 
 extern void ls();
 

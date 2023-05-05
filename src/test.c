@@ -14,6 +14,7 @@
 #include "../lib/cd.h"
 #include "../lib/cp.h"
 #include "../lib/mv.h"
+#include "../lib/parseur.h"
 
 void test_ls();
 void test_print();
@@ -26,6 +27,7 @@ void test_rm();
 void test_cd();
 void test_cp();
 void test_mv();
+void test_parseur();
 
 int main(){
     printf("####################################\n");
@@ -50,6 +52,8 @@ int main(){
     test_cp();
     printf("####################################\n");
     test_mv();
+    printf("####################################\n");
+    test_parseur();
     printf("####################################\n");
 
 }
@@ -466,15 +470,15 @@ void test_cd(){
     racine->fils = l;
     courant = racine;
 
-    courant = cd("dos1");
+    cd("dos1");
     assert(courant == n1);
-    courant = cd("/dos2");
+    cd("/dos2");
     assert(courant == n2);
-    courant = cd("..");
+    cd("..");
     assert(courant == racine);
-    courant = cd("./dos1");
+    cd("./dos1");
     assert(courant == n1);
-    courant = cd(NULL);
+    cd(NULL);
     assert(courant == racine);
 
     destroy_noeud(racine);
@@ -588,4 +592,25 @@ void test_mv(){
     destroy_arbre(racine);
 
     printf("-------Test de mv : fin-------\n");
+}
+
+void test_parseur(){
+    noeud *racine1 = creer_racine();
+    noeud *racine2 = creer_racine();
+    courant = racine1;
+    char * attendu = "Noeud / (D), père : /, 3 fils : Cours (D), Td (D), edt (F)\nNoeud Cours (D), père : /, 2 fils : ProjetC (D), Anglais (D)\nNoeud Td (D), père : /, 2 fils : td1 (F), td2 (F)\nNoeud edt (F), père : /, 0 fils\nNoeud ProjetC (D), père : Cours, 0 fils\nNoeud Anglais (D), père : Cours, 0 fils\nNoeud td1 (F), père : Td, 0 fils\nNoeud td2 (F), père : Td, 0 fils";
+    puts("Attendu :");
+    printf("%s\n\n",attendu);
+    puts("Résultat parseur 1 :");
+    parseur_fic("dossier_test/test_parseur_1.txt");
+    puts("");
+    puts("");
+    courant = racine2;
+    attendu = "Noeud / (D), père : /, 2 fils : Cours (D), edt (F)\nNoeud Cours (D), père : /, 3 fils : ProjetC (D), Anglais (D), Td (D)\nNoeud edt (F), père : /, 0 fils\nNoeud ProjetC (D), père : Cours, 0 fils\nNoeud Anglais (D), père : Cours, 0 fils\nNoeud Td (D), père : Cours, 3 fils : td1 (F), td2 (F), CopieProjet (D)\nNoeud td1 (F), père : Td, 0 fils\nNoeud td2 (F), père : Td, 0 fils\nNoeud CopieProjet (D), père : Td, 0 fils";
+    puts("Attendu :");
+    printf("%s\n\n",attendu);
+    puts("Résultat parseur 2 :");
+    parseur_fic("dossier_test/test_parseur_2.txt");
+    destroy_arbre(racine1);
+    destroy_arbre(racine2);
 }
