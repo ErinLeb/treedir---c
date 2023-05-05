@@ -63,8 +63,8 @@ void test_init_liste_noeud(){
 void test_set_nom(){
     noeud *n = creer_noeud(true, "Dossier", NULL, NULL);
     assert(strcmp(n->nom, "Dossier") == 0);
-    set_nom(n, "Nouveau dossier");
-    assert(strcmp(n->nom, "Nouveau dossier") == 0);
+    set_nom(n, "NouveauDossier");
+    assert(strcmp(n->nom, "NouveauDossier") == 0);
 
     destroy_noeud(n);
 }

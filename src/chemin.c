@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include "../lib/chemin.h"
 #include "../lib/struct.h"
 
@@ -20,7 +19,10 @@ noeud *chemin(noeud *debut, char *path){
     int nom_len = 0;
     int chemin_parcouru = 0;
     char *nom = malloc(sizeof(char));
-    assert(nom != NULL);
+    if(nom == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     noeud *courant;
     if(path[lecture] == '/'){
         courant = debut->racine;
@@ -36,8 +38,11 @@ noeud *chemin(noeud *debut, char *path){
             ++lecture;
         }
         nom = realloc(nom, sizeof(char *) * (nom_len + 1));
-        assert(nom != NULL);
-        for(int i=0; i < nom_len+1; ++i){
+        if(nom == NULL){
+            perror("Problème d'allocation.");
+            exit(EXIT_FAILURE);
+        }
+        for(int i = 0; i < nom_len + 1; ++i){
             if(i != nom_len){
                 nom[i] = path[i + chemin_parcouru];
             }
@@ -57,17 +62,10 @@ noeud *chemin(noeud *debut, char *path){
             continue;
         }
         else{
-            bool fils = false;
-            char *nomFils;
-            for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){
-                nomFils = getNom(get(courant->fils,i));
-                if(strcmp(nomFils,nom) == 0){
-                    courant = get(courant->fils, i);
-                    fils = true;
-                    break;
-                }
+            if(has_son(courant, nom)){
+                courant = get_by_name(courant, nom);
             }
-            if(!fils){
+            else{
                 free(nom);
                 return NULL;
             }
@@ -96,7 +94,10 @@ char *get_last_string(char *path){
     }
     if(nbSlash == 0){
         char *nom = malloc(sizeof(char *) * (strlen(path) + 1));
-        assert(nom != NULL);
+        if(nom == NULL){
+            perror("Problème d'allocation.");
+            exit(EXIT_FAILURE);
+        }
         for(int i = 0; i < strlen(path) + 1; ++i){
             if(i == strlen(path)){
                 nom[i] = '\0';
@@ -118,7 +119,10 @@ char *get_last_string(char *path){
         }
     }
     char *nom = malloc(sizeof(char *) * (strlen(path)-indiceSlash));
-    assert(nom != NULL);
+    if(nom == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     for(int i = 0; i < strlen(path) - indiceSlash + 1; ++i){
         if(i == strlen(path) - indiceSlash){
             nom[i] = '\0';
@@ -163,7 +167,10 @@ noeud *chemin_precedent(noeud *debut, char *path){
         }
     }
     char *newPath = malloc(sizeof(char *) * indiceSlash);
-    assert(newPath != NULL);
+    if(newPath == NULL){
+        perror("Problème d'allocation.");
+        exit(EXIT_FAILURE);
+    }
     for(int i = 0; i < indiceSlash + 1; ++i){
         if(i == indiceSlash){
             newPath[i] = '\0';
