@@ -3,4 +3,4 @@
 
 extern void ls();
 
-#endif //LS_H
+#endif 

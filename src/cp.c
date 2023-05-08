@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 /**
- * Crée une copie du noeud situé au bout du chemin @code chem1 et la déplace dans le dossier situé au bout du chemin @code chem2 en partant du noeud @code courant
+ * Crée une copie du noeud situé au bout du chemin 'chem1' et la déplace dans le dossier situé au bout du chemin 'chem2' en partant du noeud courant
  * @param chem1 chemin vers le noeud à copier
  * @param chem2 chemin vers le dossier de destination
  */
@@ -56,4 +56,3 @@ void cp(char *chem1, char *chem2){
         free(nom);
     }
 }
-

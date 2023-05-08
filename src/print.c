@@ -1,8 +1,8 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/print.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 /**
  * Effectue un parcours en largeur de l'arbre et affiche son contenu, en partant de la racine du noeud courant

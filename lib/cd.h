@@ -3,4 +3,4 @@
 
 extern void cd(char *);
 
-#endif //CD_H
+#endif

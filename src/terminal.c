@@ -1,10 +1,9 @@
-#include<stdlib.h>
-#include<stdbool.h>
-#include<stdio.h>
-#include<string.h>
 #include"../lib/parseur.h"
 #include "../lib/struct.h"
-
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 
 int main(int argc, char *argv[]){
     if(argc < 2){

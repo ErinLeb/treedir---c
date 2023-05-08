@@ -1,16 +1,17 @@
-#include<stdbool.h>
-#include<stdlib.h>
-#include<string.h>
-#include<stdio.h>
-#include<ctype.h>
 #include "../lib/struct.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
 
 noeud * courant;
 
 /**
- * Modifie le nom du noeud donné en paramètre
- * @param n noeud dont on veut modifier le nom
- * @param str nouveau nom du noeud 
+ * Modifie le nom du noeud 'n' par 'str'
+ * 
+ * @param n     noeud dont on veut modifier le nom
+ * @param str   nouveau nom du noeud 
  */
 void set_nom(noeud *n, char *str){
     if(n == n->racine && strcmp(str,"") == 0){
@@ -28,16 +29,18 @@ void set_nom(noeud *n, char *str){
 }
 
 /**
- * Renvoie le noeud à l'indice i de la liste de noeuds
+ * Renvoie le noeud à l'indice 'i' de la liste de noeuds 'l'
+ * 
  * @param l liste de noeuds
  * @param i indice du noeud souhaité
- * @return le noeud à l'indice i de la liste 
+ * @return  le noeud à l'indice 'i' de la liste 'l'
  */
 noeud *get(liste_noeud *l, int i){
     if(i >= nombre_liste_noeud(l) || i < 0){
         perror("Indice incorrect.");
         exit(EXIT_FAILURE);
     }
+
     liste_noeud *courant = l;
     for(int j = 0; j < i; ++j){
         courant = courant->succ;
@@ -46,10 +49,11 @@ noeud *get(liste_noeud *l, int i){
 }
 
 /**
- * Renvoie le fils de n ayant le nom 'nom'
- * @param n noeud parent
- * @param nom nom du fils que l'on cherche
- * @return le noeud fils ayant le nom qu'on cherche
+ * Renvoie le fils de 'n' ayant le nom 'nom'
+ * 
+ * @param n     noeud parent
+ * @param nom   nom du fils que l'on cherche
+ * @return      le noeud fils ayant le nom qu'on cherche
  */
 noeud *get_by_name(noeud *n, char* nom){
     if(!has_son(n, nom)){
@@ -67,10 +71,11 @@ noeud *get_by_name(noeud *n, char* nom){
 }
 
 /**
- * Vérifie si le noeud a un fils portant le nom que l'on cherche
- * @param n noeud parent
- * @param nom nom du fils 
- * @return true si le noeud parent a un fils avec ce nom, false sinon
+ * Vérifie si le noeud 'n' a un fils portant le nom 'nom'
+ * 
+ * @param n     noeud parent
+ * @param nom   nom du fils 
+ * @return      true si le noeud parent a un fils avec ce nom, false sinon
 */
 bool has_son(noeud *n,  char *nom){
     liste_noeud *enfants = n->fils;
@@ -93,9 +98,10 @@ bool has_son(noeud *n,  char *nom){
 }
 
 /**
- * Vérifie que la chaine de caractère ne comporte que des caractères alhpa-numériques
- * @param nom chaine que l'on veut vérifier
- * @return true si nom n'est composé que de caractères alpha-numériques, n'est pas vide et fait moins de 100 caractères, false sinon
+ * Vérifie que la chaine de caractères 'nom' ne comporte que des caractères alhpa-numériques, n'est pas vide et fait moins de 100 caractères
+ * 
+ * @param nom   chaine que l'on veut vérifier
+ * @return      true si 'nom' n'est composé que de caractères alpha-numériques, n'est pas vide et fait moins de 100 caractères, false sinon
 */
 bool is_correct(char *nom){
     if(strlen(nom) < 1 || strlen(nom) > 99){
@@ -111,9 +117,11 @@ bool is_correct(char *nom){
     return true;
 }
 
-/* Renvoie le nombre de noeuds de la liste l
+/** 
+ * Renvoie le nombre de noeuds de la liste 'l'
+ * 
  * @param l liste de noeuds dont on veut connaitre le nombre de noeuds
- * @return le nombre de noeuds de la liste l 
+ * @return  le nombre de noeuds de la liste 'l'
  */
 int nombre_liste_noeud(liste_noeud *l){
     if(l != NULL){ 
@@ -125,7 +133,8 @@ int nombre_liste_noeud(liste_noeud *l){
 }
 
 /**
- * Initialise le noeud racine 
+ * Crée un noeud racine 
+ * 
  * @return un noeud racine
  */
 noeud *creer_racine(){
@@ -134,6 +143,7 @@ noeud *creer_racine(){
         perror("Problème d'allocation.");
         exit(EXIT_FAILURE);
     }
+
     racine->est_dossier = true;
     racine->pere = racine;
     racine->racine = racine;
@@ -145,11 +155,12 @@ noeud *creer_racine(){
 
 /**
  * Initialise un noeud sans enfant
- * @param dossier vrai si le noeud est un dossier, faux sinon
- * @param nom nom du noeud
- * @param racine noeud racine du noeud
- * @param pere père du noeud
- * @return un noeud sans enfant 
+ * 
+ * @param dossier   true si le noeud est un dossier, false sinon
+ * @param nom       nom du noeud
+ * @param racine    noeud racine du noeud
+ * @param pere      père du noeud
+ * @return          un noeud sans enfant 
  */
 noeud *creer_noeud(bool dossier, char *nom, noeud *racine, noeud *pere){
     noeud *n = malloc(sizeof(noeud));
@@ -157,18 +168,21 @@ noeud *creer_noeud(bool dossier, char *nom, noeud *racine, noeud *pere){
         perror("Problème d'allocation.");
         exit(EXIT_FAILURE);
     }
+
     n->est_dossier = dossier;
     n->pere = pere;
     n->racine = racine;
     n->fils = NULL;
     set_nom(n, nom);
+
     return n;
 }
 
 /**
  * Initialise une liste de noeuds de 1 élément
+ * 
  * @param n premier élément de la liste
- * @return une liste de noeuds contenant uniquement le noeud n 
+ * @return  une liste de noeuds contenant uniquement le noeud 'n' 
  */
 liste_noeud *init_liste_noeud(noeud *n){
     liste_noeud *l = malloc(sizeof(liste_noeud));
@@ -176,13 +190,15 @@ liste_noeud *init_liste_noeud(noeud *n){
         perror("Problème d'allocation.");
         exit(EXIT_FAILURE);
     }
+
     l->no = n;
     l->succ = NULL;
+
     return l;
 }
 
 /**
- * Libère le noeud de la mémoire et la liste de ses fils si c'est un dossier 
+ * Libère le noeud 'n' de la mémoire et la liste de ses fils si c'est un dossier 
  */
 void destroy_noeud(noeud *n){
     if(n->est_dossier){
@@ -192,7 +208,7 @@ void destroy_noeud(noeud *n){
 }
 
 /**
- * Libère la liste l de la mémoire mais pas les noeuds qu'elle contient 
+ * Libère la liste 'l' de la mémoire mais pas les noeuds qu'elle contient 
  */
 void destroy_liste_noeud(liste_noeud *l){
     liste_noeud *tmp;
@@ -204,7 +220,9 @@ void destroy_liste_noeud(liste_noeud *l){
 }
 
 /**
- * libère la mémoire allouée pour l'arbre de racine @code racine 
+ * Lbère la mémoire allouée pour l'arbre de racine 'racine'
+ * 
+ * @param racine racine de l'arbre que l'on veut libérer
  */
 void destroy_arbre(noeud *racine){
     if(racine->fils == NULL){
@@ -220,9 +238,10 @@ void destroy_arbre(noeud *racine){
 }
 
 /**
- * Supprime la tête d'une liste de noeud
+ * Supprime la tête de la liste de noeud 'l'
+ * 
  * @param l liste dont on veut supprimer la tête
- * @return la nouvelle liste dont on a supprimé la tête 
+ * @return  la nouvelle liste dont on a supprimé la tête 
  */
 liste_noeud *supprHead(liste_noeud *l){
     if(l == NULL){
@@ -239,10 +258,11 @@ liste_noeud *supprHead(liste_noeud *l){
 }
 
 /**
- * Insère le noeud n à la fin de la liste l
+ * Insère le noeud 'n' à la fin de la liste 'l'
+ * 
  * @param l liste à remplir
  * @param n noeud à insérer
- * @return retourne la liste modifiée
+ * @return  la liste modifiée
  */
 liste_noeud *pushTail(liste_noeud *l, noeud *n){
     if(l != NULL){
@@ -260,10 +280,11 @@ liste_noeud *pushTail(liste_noeud *l, noeud *n){
 }
 
 /**
- * Vérifie si le noeud @code n2 est dans le sous arbre de racine @code n1
- * @param n1 racine du sous arbre dans lequel on cherche @code n2
- * @param n2 noeud dont on cherche la présence dans le sous arbre de racine @code n1
- * @return true si @code n2 est dans le sous arbre de racine @code n1 et false sinon
+ * Vérifie si le noeud 'n2' est dans le sous arbre de racine 'n1'
+ * 
+ * @param n1 racine du sous arbre dans lequel on cherche 'n2'
+ * @param n2 noeud dont on cherche la présence dans le sous arbre de racine 'n1'
+ * @return   true si 'n2' est dans le sous arbre de racine 'n1', false sinon
  */
 bool est_dans_sous_arbre(noeud *n1, noeud *n2){
     noeud *tmp = n2;
@@ -277,10 +298,11 @@ bool est_dans_sous_arbre(noeud *n1, noeud *n2){
 }
 
 /**
- * Supprime le noeud n de la liste l sans libérer la mémoire qu'il occupe
- * @param l liste de noeuds dans laquelle on veut supprimer n
+ * Supprime le noeud 'n' de la liste 'l' sans libérer la mémoire qu'il occupe
+ * 
+ * @param l liste de noeuds dans laquelle on veut supprimer 'n'
  * @param n le noeud que l'on veut supprimer
- * @return la liste de noeuds modifiée
+ * @return  la liste de noeuds modifiée
 */
 liste_noeud *suppr_noeud_liste(liste_noeud *l, noeud *n){
     if(l == NULL){
@@ -311,10 +333,11 @@ liste_noeud *suppr_noeud_liste(liste_noeud *l, noeud *n){
     return l;
 }
 
-/*
- * Renvoie une chaine de charactère contenant le nom du noeud donné en paramètre
+/**
+ * Renvoie une chaine de charactères contenant le nom du noeud 'n'
+
  * @param n noeud dont on veut le nom
- * @return une chaine de caractère contenant le nom du noeud n
+ * @return  une chaine de caractères contenant le nom du noeud 'n'
  */
 char *getNom(noeud *n){
     if(n == n->racine){
@@ -324,9 +347,9 @@ char *getNom(noeud *n){
 }
 
 /**
- * Crée une copie du noeud @code n
+ * Crée une copie du noeud'n'
  * @param n noeud à copier
- * @return une copie du noeud @code n 
+ * @return  une copie du noeud 'n'
  */
 noeud *copie(noeud *n){
     if(n != n->racine){

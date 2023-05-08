@@ -5,9 +5,10 @@
 #include <string.h>
 
 /**
- * Renvoie le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
- * @param path chemin vers le noeud souhaité
- * @return un pointeur vers le noeud, s'il existe et que c'est un dossier, au bout du chemin @code path en partant du noeud @code courant 
+ * Actualise le noeud courant par le noeud au bout du chemin 'path' en partant du noeud courant 
+ * actuel, s'il existe et que c'est un dossier.
+ * 
+ * @param path chemin vers le noeud souhaité 
  */
 void cd(char *path){
     if(path == NULL){

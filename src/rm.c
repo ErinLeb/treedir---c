@@ -1,12 +1,13 @@
-#include<stdlib.h>
-#include<stdio.h>
 #include "../lib/struct.h"
 #include "../lib/rm.h"
 #include "../lib/chemin.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /**
- * Détruit le noeud et toute sa descendance indiqué par path
- * @param path l'adresse du noeud à supprimer 
+ * Détruit le noeud désigné par 'path' et toute sa descendance
+ * 
+ * @param path le chemin du noeud à supprimer 
 */
 void rm(char *path){
     noeud *s = chemin(courant, path);

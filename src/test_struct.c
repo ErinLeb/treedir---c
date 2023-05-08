@@ -1,9 +1,9 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<assert.h>
-#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/test_struct.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
 
 void test_is_correct(){
     assert(!is_correct("   "));

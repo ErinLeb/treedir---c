@@ -3,4 +3,4 @@
 
 extern void cp(char *, char *);
 
-#endif //CP_H
+#endif

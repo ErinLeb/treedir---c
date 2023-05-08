@@ -1,11 +1,13 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include <stdbool.h>
-#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/ls.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
-/* Affiche sur le terminal la liste des noms des fils du noeud courant*/
+/**
+ * Affiche la liste des noms des fils du noeud courant
+*/
 void ls(){
     liste_noeud *tmp = courant->fils;
     while(tmp != NULL){
