@@ -1,10 +1,10 @@
-#include <stdio.h>
+#include "../lib/struct.h"
+#include "../lib/touch.h"
 #include <stdlib.h>
- #include "../lib/struct.h"
- #include "../lib/touch.h"
+#include <stdio.h>
 
 /**
- * Crée un fichier fils au noeud courant , portant le nom @code nom
+ * Crée un fichier fils au noeud courant portant le nom 'nom'
 */
 void touch(char *nom){
   if(!is_correct(nom)){

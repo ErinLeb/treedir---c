@@ -1,11 +1,12 @@
-#include<stdlib.h>
-#include<string.h>
-#include <stdio.h>
 #include "../lib/struct.h"
 #include "../lib/mkdir.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 /**
- * Crée un fils dossier à curr, portant le nom en paramètre
+ * Crée un fils dossier au noeud courant, portant le nom 'nom'
+ * 
  * @param nom nom du dossier créé au noeud courant
 */
 void mkdir(char *nom){
@@ -13,6 +14,7 @@ void mkdir(char *nom){
         perror("Nom incorrect.");
         exit(EXIT_FAILURE);
     }
+    
     if(has_son(courant, nom)){
         perror("Le dossier courant possède déjà un fils avec le même nom.");
         exit(EXIT_FAILURE);

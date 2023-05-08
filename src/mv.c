@@ -5,6 +5,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+
+/**
+ * Déplace le noeud désigné par 'chem1' à l'emplacement désigné par 'chem2', et le renomme si besoin
+ * 
+ * @param chem1 chemin du noeud à déplacer
+ * @param chem2 chemin de l'emplacement où déplacer le noeud
+*/
 void mv(char *chem1, char *chem2){
     noeud *src = chemin(courant, chem1);
     if(src == NULL){
@@ -25,13 +32,12 @@ void mv(char *chem1, char *chem2){
         nom = get_last_string(chem2);
         alloc = true;
     }
-    
     else{
         nom = src->nom;
     }
 
     if(!dst->est_dossier){
-        perror("Le chemin 2 ne désigne pas un dossier");
+        perror("Le chemin 2 ne désigne pas un dossier.");
         exit(EXIT_FAILURE);
     }
     

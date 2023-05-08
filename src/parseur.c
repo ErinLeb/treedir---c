@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <ctype.h>
 #include "../lib/parseur.h"
 #include "../lib/struct.h"
 #include "../lib/chemin.h"
@@ -15,7 +10,19 @@
 #include "../lib/cp.h"
 #include "../lib/rm.h"
 #include "../lib/mv.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <ctype.h>
 
+/**
+ * Appelle la fonction désignée par 'comm' avec ses arguments s'ils sont corrects.
+ * 
+ * @param comm  commande à exécuter
+ * @param chem1 premier argument s'il y en a un, NULL sinon
+ * @param chem2 deuxième argument s'il y en a un, NULL sinon
+*/
 void commande(char *comm, char *chem1, char *chem2){
     //erreur du parseur de fichier et non d'une mauvaise ligne de commande 
     if(comm == NULL){
@@ -80,85 +87,11 @@ void commande(char *comm, char *chem1, char *chem2){
     }
 }
 
-/**
- * parse un fichier en lignes et passe chaque ligne à @code parseur_ligne en argument
- */
-void parseur_fic(char *path){
-    // ouverture du fichier
-    FILE *fic = fopen(path,"r");
-    if(fic == NULL){
-        perror("Problème avec l'ouverture du fichier.");
-        exit(EXIT_FAILURE);
-    }
-
-    // lecture du fichier
-    char *ligne = "";
-    int lecture = 0;
-    int len_ligne = 0;
-    int debut_ligne = 0;
-    int c = 0;
-    while((c = fgetc(fic)) != EOF){
-        if(c != '\n'){
-            ++len_ligne;
-        }
-        else{
-            lecture = fseek(fic, debut_ligne, SEEK_SET);
-            if(lecture != 0){
-                perror("Problème de déplacement de la tête de lecture.");
-                exit(EXIT_FAILURE);
-            }
-            ligne = malloc(sizeof(char *) * (len_ligne + 1));
-            if(ligne == NULL){
-                perror("Problème d'allocation.");
-                exit(EXIT_FAILURE);
-            }
-            char *s = fgets(ligne, len_ligne + 1, fic);
-            if(s == NULL){
-                perror("Problème d'allocation.");
-                exit(EXIT_FAILURE);
-            }
-            parseur_ligne(ligne);
-            free(ligne);
-            debut_ligne += len_ligne + 1;
-            lecture = fseek(fic, debut_ligne, SEEK_SET);
-            if(lecture != 0){
-                perror("Problème de déplacement de la tête de lecture.");
-                exit(EXIT_FAILURE);
-            }
-            len_ligne = 0;
-        }
-    }
-    // gestion du cas où la dernière ligne ne finit pas par '\n'
-    if(len_ligne != 0){
-        lecture = fseek(fic, debut_ligne, SEEK_SET);
-        if(lecture != 0){
-            perror("Problème de déplacement de la tête de lecture.");
-            exit(EXIT_FAILURE);
-        }
-        ligne = malloc(sizeof(char) * (len_ligne + 1));
-        if(ligne == NULL){
-            perror("Problème d'allocation.");
-            exit(EXIT_FAILURE);
-        }
-        char *s = fgets(ligne, len_ligne + 1, fic);
-        if(s == NULL){
-            perror("Problème d'allocation.");
-            exit(EXIT_FAILURE);
-        }
-        parseur_ligne(ligne);
-        free(ligne);
-    }
-
-    // fermeture du fichier
-    lecture = fclose(fic);
-    if(lecture != 0){
-        perror("Problème avec la fermeture du fichier.");
-        exit(EXIT_FAILURE);
-    }
-}
 
 /**
- * parse une ligne en mots et passe ces mots à @code commande en argument
+ * Parse une ligne en mots et fait appel à 'commande' pour parser chaque commande
+ * 
+ * @param ligne ligne à parser
  */
 void parseur_ligne(char *ligne){
     char *comm = NULL;
@@ -263,5 +196,83 @@ void parseur_ligne(char *ligne){
         if(nbMots == 3){
             free(chem2);
         }
+    }
+}
+
+
+/**
+ * Parse un fichier en lignes et fait appel à 'parseur_ligne' pour parser chaque ligne
+ * 
+ * @param path chemin dans le répertoire du fichier à parser
+ */
+void parseur_fic(char *path){
+    FILE *fic = fopen(path,"r");
+    if(fic == NULL){
+        perror("Problème avec l'ouverture du fichier.");
+        exit(EXIT_FAILURE);
+    }
+
+    char *ligne = "";
+    int lecture = 0;
+    int len_ligne = 0;
+    int debut_ligne = 0;
+    int c = 0;
+    while((c = fgetc(fic)) != EOF){
+        if(c != '\n'){
+            ++len_ligne;
+        }
+        else{
+            lecture = fseek(fic, debut_ligne, SEEK_SET);
+            if(lecture != 0){
+                perror("Problème de déplacement de la tête de lecture.");
+                exit(EXIT_FAILURE);
+            }
+            ligne = malloc(sizeof(char *) * (len_ligne + 1));
+            if(ligne == NULL){
+                perror("Problème d'allocation.");
+                exit(EXIT_FAILURE);
+            }
+            char *s = fgets(ligne, len_ligne + 1, fic);
+            if(s == NULL){
+                perror("Problème d'allocation.");
+                exit(EXIT_FAILURE);
+            }
+            parseur_ligne(ligne);
+            free(ligne);
+            debut_ligne += len_ligne + 1;
+            lecture = fseek(fic, debut_ligne, SEEK_SET);
+            if(lecture != 0){
+                perror("Problème de déplacement de la tête de lecture.");
+                exit(EXIT_FAILURE);
+            }
+            len_ligne = 0;
+        }
+    }
+
+    // gestion du cas où la dernière ligne ne finit pas par '\n'
+    if(len_ligne != 0){
+        lecture = fseek(fic, debut_ligne, SEEK_SET);
+        if(lecture != 0){
+            perror("Problème de déplacement de la tête de lecture.");
+            exit(EXIT_FAILURE);
+        }
+        ligne = malloc(sizeof(char) * (len_ligne + 1));
+        if(ligne == NULL){
+            perror("Problème d'allocation.");
+            exit(EXIT_FAILURE);
+        }
+        char *s = fgets(ligne, len_ligne + 1, fic);
+        if(s == NULL){
+            perror("Problème d'allocation.");
+            exit(EXIT_FAILURE);
+        }
+        parseur_ligne(ligne);
+        free(ligne);
+    }
+
+    lecture = fclose(fic);
+    if(lecture != 0){
+        perror("Problème avec la fermeture du fichier.");
+        exit(EXIT_FAILURE);
     }
 }

@@ -1,20 +1,22 @@
-#include <string.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "../lib/chemin.h"
 #include "../lib/struct.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 /**
- * fonction renvoyant le noeud au bout du chemin path en partant du noeud debut
+ * Renvoie le noeud au bout du chemin 'path' en partant du noeud 'debut'
+ * 
  * @param debut noeud de départ
- * @param path chemin absolu ou relatif vers un noeud
- * @return un pointeur vers le noeud au bout de path en partant de noeud debut ou NULL si le chemin est incorrect 
+ * @param path  chemin absolu ou relatif vers un noeud
+ * @return      un pointeur vers le noeud au bout de path en partant de noeud 'debut' ou NULL si le chemin est incorrect 
  */
 noeud *chemin(noeud *debut, char *path){
     if(strcmp(path,"") == 0 || strcmp(path,"/") == 0){
         return NULL;
     }
+
     int lecture = 0;
     int nom_len = 0;
     int chemin_parcouru = 0;
@@ -23,6 +25,7 @@ noeud *chemin(noeud *debut, char *path){
         perror("Problème d'allocation.");
         exit(EXIT_FAILURE);
     }
+
     noeud *courant;
     if(path[lecture] == '/'){
         courant = debut->racine;
@@ -81,9 +84,10 @@ noeud *chemin(noeud *debut, char *path){
 }
 
 /**
- * renvoie la chaine de caractère située à la suite du dernier '/' contenu dans @code path
- * @param path chemin dont on veut obtenir la chaine de caratère située après le dernier '/'
- * @return la chaine de caractère située à la suite du dernier '/' contenu dans @code path
+ * Renvoie la chaine de caractères située à la suite du dernier '/' contenu dans 'path'
+ * 
+ * @param path chemin dont on veut obtenir la chaine de caratères située après le dernier '/'
+ * @return     la chaine de caractères située à la suite du dernier '/' contenu dans 'path'
  */
 char *get_last_string(char *path){
     int nbSlash = 0;
@@ -92,6 +96,7 @@ char *get_last_string(char *path){
             ++nbSlash;
         }
     }
+
     if(nbSlash == 0){
         char *nom = malloc(sizeof(char *) * (strlen(path) + 1));
         if(nom == NULL){
@@ -108,6 +113,7 @@ char *get_last_string(char *path){
         }
         return nom;
     }
+
     int compteur = 0;
     int indiceSlash = 0;
     for(int i = 0; i < strlen(path); ++i){
@@ -118,6 +124,7 @@ char *get_last_string(char *path){
             ++indiceSlash;
         }
     }
+
     char *nom = malloc(sizeof(char *) * (strlen(path)-indiceSlash));
     if(nom == NULL){
         perror("Problème d'allocation.");
@@ -131,31 +138,35 @@ char *get_last_string(char *path){
             nom[i] = path[i + indiceSlash + 1];
         }
     }
+
     return nom;
 }
 
 /**
- * renvoie le noeud situé au bout du chemin @code path avant le dernier '/' en partant du noeud @code départ
+ * Renvoie le noeud situé au bout du chemin 'path' avant le dernier '/' en partant du noeud 'départ'
  * @param debut noeud de départ
- * @param path chemin dont on veut trouver le noeud juste avant celui qui est situé au bout
- * @return un pointeur vers le noeud situé juste avant le noeud au bout de @code path. NULL si celui ci n'existe pas
+ * @param path  chemin dont on veut trouver le noeud juste avant celui qui est situé au bout
+ * @return      un pointeur vers le noeud situé juste avant le noeud au bout de 'path', NULL si celui ci n'existe pas
  */
 noeud *chemin_precedent(noeud *debut, char *path){
     if(strcmp(path,"") == 0 || strcmp(path,"/") == 0){
         return NULL;
     }
+
     int nbSlash = 0;
     for(int i = 0; i < strlen(path); ++i){
         if(path[i] == '/'){
             ++nbSlash;
         }
     }
+
     if(nbSlash == 0){
         return debut;
     }
     else if(nbSlash == 1 && path[0] == '/'){
         return debut->racine;
     }
+
     int compteur = 0;
     int indiceSlash = 0;
     for(int i = 0; i < strlen(path); ++i){
@@ -171,6 +182,7 @@ noeud *chemin_precedent(noeud *debut, char *path){
         perror("Problème d'allocation.");
         exit(EXIT_FAILURE);
     }
+    
     for(int i = 0; i < indiceSlash + 1; ++i){
         if(i == indiceSlash){
             newPath[i] = '\0';

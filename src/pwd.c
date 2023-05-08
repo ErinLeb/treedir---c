@@ -1,9 +1,10 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include <stdbool.h>
-#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/ls.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
 
 /**
  * Affiche le chemin absolu du noeud courant depuis sa racine
@@ -12,7 +13,7 @@ void pwd(){
     if(courant != courant->racine){ 
 
         noeud *tmp = courant;
-        char *chemin = malloc(sizeof(char) * (strlen(tmp->nom) + 2)); // on alloue une chaine de caractère qui contiendra le nom du noeud courant précédé d'un '/' et suivi d'un '\0'
+        char *chemin = malloc(sizeof(char) * (strlen(tmp->nom) + 2)); // on alloue une chaine de caractères qui contiendra le nom du noeud courant précédé d'un '/' et suivi d'un '\0'
         if(chemin == NULL){
             perror("Problème d'allocation.");
             exit(EXIT_FAILURE);
@@ -28,7 +29,7 @@ void pwd(){
 
         while(tmp->pere != courant->racine){ 
             tmp = tmp->pere;
-            chemin = realloc(chemin, taille_chemin + strlen(tmp->nom) + 1); // on réalloue la chaine de caractère en lui ajoutant la taille du nom du nouveau noeud tmp +1 pour le '/'
+            chemin = realloc(chemin, taille_chemin + strlen(tmp->nom) + 1); // on réalloue la chaine de caractères en lui ajoutant la taille du nom du nouveau noeud tmp +1 pour le '/'
             if(chemin == NULL){
                 perror("Problème d'allocation.");
                 exit(EXIT_FAILURE);
@@ -40,7 +41,7 @@ void pwd(){
             }
             taille_chemin += strlen(tmp->nom) + 1;
         }
-        // on affiche le chemin
+
         printf("%s\n", chemin);
         free(chemin);
     }

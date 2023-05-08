@@ -1,7 +1,3 @@
-#include<stdlib.h>
-#include<stdio.h>
-#include<assert.h>
-#include<string.h>
 #include "../lib/struct.h"
 #include "../lib/chemin.h"
 #include "../lib/ls.h"
@@ -9,12 +5,16 @@
 #include "../lib/mkdir.h"
 #include "../lib/touch.h"
 #include "../lib/pwd.h"
-#include "../lib/test_struct.h"
 #include "../lib/rm.h"
 #include "../lib/cd.h"
 #include "../lib/cp.h"
 #include "../lib/mv.h"
 #include "../lib/parseur.h"
+#include "../lib/test_struct.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <string.h>
 
 void test_ls();
 void test_print();

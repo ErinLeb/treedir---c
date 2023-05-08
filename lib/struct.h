@@ -19,13 +19,17 @@ struct liste_noeud{
 typedef struct noeud noeud;
 typedef struct liste_noeud liste_noeud;
 
+
 extern noeud *courant;
 
-extern void set_nom(noeud *, char *);
+
+extern bool is_correct(char *);
 extern noeud *get(liste_noeud *, int);
 extern noeud *get_by_name(noeud *, char*);
+extern char *getNom(noeud *);
+extern void set_nom(noeud *, char *);
 extern bool has_son(noeud *, char *);
-extern bool is_correct(char *);
+extern bool est_dans_sous_arbre(noeud *, noeud *);
 extern int nombre_liste_noeud(liste_noeud *);
 extern noeud *creer_racine();
 extern noeud *creer_noeud(bool, char *, noeud *, noeud *);
@@ -33,14 +37,9 @@ extern liste_noeud *init_liste_noeud(noeud *);
 extern void destroy_noeud(noeud *);
 extern void destroy_liste_noeud();
 extern void destroy_arbre(noeud *);
-extern liste_noeud *supprHead(liste_noeud *);
 extern liste_noeud *pushTail(liste_noeud *, noeud *);
-extern bool est_dans_sous_arbre(noeud *, noeud *);
+extern liste_noeud *supprHead(liste_noeud *);
 extern liste_noeud *suppr_noeud_liste(liste_noeud *, noeud *);
-extern char *getNom(noeud *);
-extern bool est_dans_sous_arbre(noeud *, noeud *);
 extern noeud *copie(noeud *);
-extern void destroy_arbre(noeud *);
-extern bool equals(noeud *, noeud *);
 
 #endif

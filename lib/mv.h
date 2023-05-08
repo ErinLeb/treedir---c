@@ -3,4 +3,4 @@
 
 extern void mv(char *, char *);
 
-#endif //MV_H
+#endif 
