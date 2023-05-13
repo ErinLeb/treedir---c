@@ -517,6 +517,13 @@ void test_cp(){
     courant = racine;
 
     cp("Td","Cours");
+    
+    //Td n'est pas modifié
+    assert(nombre_liste_noeud(td->fils) == 2);
+    assert(has_son(td,"td1"));
+    assert(has_son(td,"td2"));
+
+    //Td a été copié dans Cours
     assert(nombre_liste_noeud(cours->fils) == 3);
     assert(has_son(cours,"Td"));
     assert(nombre_liste_noeud(get_by_name(cours,"Td")->fils) == 2);
@@ -524,6 +531,17 @@ void test_cp(){
     assert(has_son(get_by_name(cours,"Td"),"td2"));
     
     cp("Cours","Td/Maths");
+    
+    //Cours n'est pas modifié
+    assert(nombre_liste_noeud(cours->fils) == 3);
+    assert(has_son(cours,"Td"));
+    assert(has_son(cours,"anglais"));
+    assert(has_son(cours,"ProjetC"));
+    assert(nombre_liste_noeud(get_by_name(cours,"Td")->fils) == 2);
+    assert(has_son(get_by_name(cours,"Td"),"td1"));
+    assert(has_son(get_by_name(cours,"Td"),"td2"));
+    
+    //Cours a été copié dans Td/Maths
     assert(nombre_liste_noeud(td->fils) == 3);
     assert(has_son(td,"Maths"));
     assert(nombre_liste_noeud(get_by_name(td,"Maths")->fils) == 3);

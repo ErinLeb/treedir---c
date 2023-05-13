@@ -280,6 +280,13 @@ void test_copie(){
         assert(get(racine->fils,i)->est_dossier == get(c->fils,i)->est_dossier);
         assert(nombre_liste_noeud(get(racine->fils,i)->fils) == nombre_liste_noeud(get(c->fils,i)->fils));
     }
+    
+    noeud *n3 = creer_noeud(true,"dos3",racine,c);
+    c->fils = pushTail(c->fils,n3);
+    assert(!has_son(racine,"dos3"));
+    noeud *n4 = creer_noeud(true,"dos4",racine,racine);
+    racine->fils = pushTail(racine->fils,n4);
+    assert(!has_son(c,"dos4"));
 
     destroy_arbre(racine);
     destroy_arbre(c);

@@ -358,7 +358,7 @@ noeud *copie(noeud *n){
             c->fils = init_liste_noeud(copie(get(n->fils,0)));
             get(c->fils,0)->pere = c;
             for(int i = 1; i < nombre_liste_noeud(n->fils); ++i){
-                pushTail(c->fils,copie(get(n->fils,i)));
+                c->fils = pushTail(c->fils,copie(get(n->fils,i)));
                 get(c->fils,i)->pere = c;
             }
         }
@@ -370,7 +370,7 @@ noeud *copie(noeud *n){
             c->fils = init_liste_noeud(copie(get(n->fils,0)));
             get(c->fils,0)->pere = c;
             for(int i = 1; i < nombre_liste_noeud(n->fils); ++i){
-                pushTail(c->fils,copie(get(n->fils,i)));
+                c->fils = pushTail(c->fils,copie(get(n->fils,i)));
                 get(c->fils,i)->pere = c;
             }
         }
