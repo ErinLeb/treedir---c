@@ -50,7 +50,7 @@ void cp(char *chem1, char *chem2){
 
     noeud *c = copie(src);
     c->pere = dst;
-    pushTail(dst->fils,c);
+    dst->fils = pushTail(dst->fils,c);
     set_nom(c,nom);
     if(alloc){
         free(nom);

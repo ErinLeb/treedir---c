@@ -39,7 +39,7 @@ void print(){
         printf("\n");
         
         for(int i = 0; i < nombre_liste_noeud(courant->fils); ++i){ 
-            pushTail(fifo, get(courant->fils, i));
+            fifo = pushTail(fifo, get(courant->fils, i));
         }
 
         fifo = supprHead(fifo); 
