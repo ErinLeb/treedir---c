@@ -36,11 +36,17 @@ void commande(char *comm, char *chem1, char *chem2){
 
     if(chem1 == NULL && chem2 == NULL){
         if(strcmp(comm, "ls") == 0){
+            puts("--------------------ls--------------------");
             ls();
+            puts("");
         }else if(strcmp(comm, "print") == 0){
+            puts("-------------------print------------------");
             print();
+            puts("");
         }else if(strcmp(comm, "pwd") == 0){
+            puts("-------------------pwd--------------------");
             pwd();
+            puts("");
         }else if(strcmp(comm, "cd") == 0){
             cd(chem1);
         }else if(strcmp(comm, "mkdir") == 0 || strcmp(comm, "touch") == 0 || strcmp(comm, "cp") == 0 || strcmp(comm, "mv") == 0 || strcmp(comm, "rm") == 0){
