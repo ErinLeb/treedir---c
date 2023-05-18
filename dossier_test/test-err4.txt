@@ -1,0 +1,3 @@
+touch fic1
+cd fic1
+pwd
