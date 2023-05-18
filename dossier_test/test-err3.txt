@@ -1,0 +1,8 @@
+mkdir Rep1
+mkdir Rep2
+cd Rep1
+mkdir Rep3
+cd /Rep2
+mkdir Rep3
+mv Rep3 /Rep1
+print

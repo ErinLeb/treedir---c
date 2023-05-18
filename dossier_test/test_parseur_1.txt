@@ -1,0 +1,15 @@
+mkdir Cours
+cd Cours
+mkdir ProjetC
+mkdir Anglais
+cd
+
+        
+cp Cours /Td
+touch edt
+rm /Td/ProjetC
+rm       /Td/Anglais
+cd Td
+touch td1
+     touch td2
+print
