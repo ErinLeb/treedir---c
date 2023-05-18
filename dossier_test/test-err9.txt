@@ -1,0 +1,5 @@
+mkdir Rep1
+mkdir Rep2
+mkdir Rep3
+cp Rep1 Rep2 Rep3
+ls Rep1
