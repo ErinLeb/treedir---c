@@ -1,0 +1,2 @@
+mkdir dos1
+cp dos2 dos1
