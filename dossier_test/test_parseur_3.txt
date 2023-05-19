@@ -1,0 +1,16 @@
+mkdir dos1
+mkdir dos2
+cd dos1
+mkdir dos3
+cd /dos1/dos3
+touch fic1
+cd ..
+mkdir dos4
+cd
+cp dos1/dos3 dos2
+mv dos2/dos3 dos1/dos4/dos5
+rm dos2
+cd dos1/dos4
+pwd
+ls
+print
