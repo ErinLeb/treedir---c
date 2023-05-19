@@ -13,7 +13,7 @@
  * @return      un pointeur vers le noeud au bout de path en partant de noeud 'debut' ou NULL si le chemin est incorrect 
  */
 noeud *chemin(noeud *debut, char *path){
-    if(strcmp(path,"") == 0 || strcmp(path,"/") == 0){
+    if(strcmp(path,"") == 0 || strcmp(path,"/") == 0 || path[strlen(path)-1] == '/'){
         return NULL;
     }
 
