@@ -1,0 +1,6 @@
+mkdir dos1
+cd dos1
+touch fic1 
+cd 
+mkdir fic1
+cp fic1 dos1
